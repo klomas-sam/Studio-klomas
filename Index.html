@@ -3,2015 +3,507 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Studio IA — Klomas Universe</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio IA — Klomas</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════ */
-:root {
-  /* Klomas Botanique */
-  --kb-bg: #f7f4ef;
-  --kb-dark: #1a2e1c;
-  --kb-sage: #8a9e7e;
-  --kb-gold: #b8a070;
-  --kb-pale: #ede9e1;
-  --kb-border: #ddd8ce;
-
-/* La Tresse */
-–lt-bg: #fdf6ef;
-–lt-dark: #3d1f0a;
-–lt-terra: #c4622d;
-–lt-peach: #f0d5bc;
-–lt-rose: #e8c4a8;
-–lt-border: #e2d0bb;
-
-/* Active brand (swapped via JS) */
-–brand-bg: var(–kb-bg);
-–brand-dark: var(–kb-dark);
-–brand-accent: var(–kb-gold);
-–brand-muted: var(–kb-sage);
-–brand-pale: var(–kb-pale);
-–brand-border: var(–kb-border);
-
-–radius: 14px;
-–radius-sm: 8px;
-–shadow: 0 2px 16px rgba(0,0,0,.07);
-–shadow-lg: 0 8px 40px rgba(0,0,0,.12);
-}
-
-- { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  html, body { height:100%; overflow:hidden; }
-
-body {
-font-family: ‘DM Sans’, sans-serif;
-background: var(–brand-bg);
-color: var(–brand-dark);
-transition: background .4s ease, color .4s ease;
-display: flex;
-flex-direction: column;
-}
-
-/* ═══════════════════════════════════
-TOPBAR
-═══════════════════════════════════ */
-.topbar {
-flex-shrink: 0;
-display: flex;
-align-items: center;
-height: 58px;
-padding: 0 1.2rem;
-gap: 1rem;
-border-bottom: 1px solid var(–brand-border);
-background: var(–brand-bg);
-transition: background .4s, border-color .4s;
-position: relative;
-z-index: 100;
-}
-
-.brand-toggle {
-display: flex;
-border-radius: 30px;
-overflow: hidden;
-border: 1.5px solid var(–brand-border);
-flex-shrink: 0;
-}
-.brand-btn {
-padding: .35rem .85rem;
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .08em;
-text-transform: uppercase;
-cursor: pointer;
-border: none;
-transition: all .25s;
-font-family: ‘DM Sans’, sans-serif;
-white-space: nowrap;
-}
-.brand-btn.kb { background: transparent; color: var(–kb-sage); }
-.brand-btn.lt { background: transparent; color: #c4936d; }
-.brand-btn.kb.active { background: var(–kb-dark); color: var(–kb-gold); }
-.brand-btn.lt.active { background: var(–lt-terra); color: var(–lt-peach); }
-
-.topbar-title {
-flex: 1;
-text-align: center;
-font-family: ‘Libre Baskerville’, serif;
-font-size: .95rem;
-font-weight: 400;
-color: var(–brand-dark);
-transition: color .4s;
-}
-.topbar-title em { font-style: italic; color: var(–brand-accent); }
-
-.topbar-date {
-font-size: .65rem;
-color: var(–brand-muted);
-font-weight: 400;
-flex-shrink: 0;
-text-align: right;
-}
-
-/* ═══════════════════════════════════
-MODULE TABS
-═══════════════════════════════════ */
-.mod-tabs {
-flex-shrink: 0;
-display: flex;
-padding: .7rem 1rem .5rem;
-gap: .5rem;
-overflow-x: auto;
--webkit-overflow-scrolling: touch;
-scrollbar-width: none;
-background: var(–brand-bg);
-transition: background .4s;
-}
-.mod-tabs::-webkit-scrollbar { display: none; }
-
-.mod-tab {
-display: flex;
-align-items: center;
-gap: .4rem;
-padding: .5rem .9rem;
-border-radius: 30px;
-font-size: .72rem;
-font-weight: 600;
-letter-spacing: .04em;
-cursor: pointer;
-white-space: nowrap;
-transition: all .2s;
-border: 1.5px solid var(–brand-border);
-background: transparent;
-color: var(–brand-muted);
-font-family: ‘DM Sans’, sans-serif;
-}
-.mod-tab.active {
-background: var(–brand-dark);
-color: var(–brand-accent);
-border-color: var(–brand-dark);
-}
-.mod-tab .ico { font-size: .85rem; }
-
-/* ═══════════════════════════════════
-MAIN LAYOUT
-═══════════════════════════════════ */
-.main {
-flex: 1;
-overflow: hidden;
-display: flex;
-position: relative;
-}
-
-/* ── SIDEBAR (agents list) ── */
-.sidebar {
-width: 230px;
-flex-shrink: 0;
-border-right: 1px solid var(–brand-border);
-overflow-y: auto;
--webkit-overflow-scrolling: touch;
-padding: .8rem .6rem;
-background: var(–brand-pale);
-transition: background .4s, border-color .4s, transform .3s ease;
-}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:#f7f4ef; color:#2a3a2c; min-height:100vh; }
+.topbar { background:#1a2e1c; padding:1rem 1.2rem; display:flex; align-items:center; gap:.8rem; }
+.brand-toggle { display:flex; border-radius:20px; overflow:hidden; border:1px solid rgba(184,160,112,.3); }
+.btab { padding:.35rem .8rem; font-size:.65rem; font-weight:600; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; background:transparent; color:#8a9e7e; }
+.btab.on { background:#b8a070; color:#1a2e1c; }
+.topbar-title { flex:1; text-align:center; font-family:'Libre Baskerville',serif; font-size:.9rem; color:#f7f4ef; font-weight:400; }
+.topbar-title em { color:#b8a070; font-style:italic; }
+.navtabs { display:flex; gap:.4rem; padding:.7rem 1rem .5rem; overflow-x:auto; background:#f7f4ef; border-bottom:1px solid #ddd8ce; }
+.navtabs::-webkit-scrollbar { display:none; }
+.ntab { padding:.45rem .85rem; border-radius:20px; font-size:.7rem; font-weight:600; cursor:pointer; white-space:nowrap; border:1.5px solid #ddd8ce; background:transparent; color:#8a9e7e; font-family:'DM Sans',sans-serif; }
+.ntab.on { background:#1a2e1c; color:#b8a070; border-color:#1a2e1c; }
+.layout { display:flex; height:calc(100vh - 105px); overflow:hidden; }
+.sidebar { width:200px; flex-shrink:0; overflow-y:auto; padding:.6rem; border-right:1px solid #ddd8ce; background:#ede9e1; }
 .sidebar::-webkit-scrollbar { display:none; }
-
-.sidebar-section-label {
-font-size: .58rem;
-letter-spacing: .18em;
-text-transform: uppercase;
-color: var(–brand-muted);
-font-weight: 600;
-padding: .6rem .6rem .3rem;
-}
-
-.agent-btn {
-display: flex;
-align-items: center;
-gap: .6rem;
-width: 100%;
-padding: .65rem .7rem;
-border-radius: var(–radius-sm);
-border: none;
-background: transparent;
-cursor: pointer;
-text-align: left;
-transition: background .15s;
-font-family: ‘DM Sans’, sans-serif;
-margin-bottom: 2px;
-}
-.agent-btn:hover { background: rgba(0,0,0,.04); }
-.agent-btn.active { background: var(–brand-dark); }
-.agent-btn.active .agent-btn-name { color: var(–brand-accent); }
-.agent-btn.active .agent-btn-sub { color: rgba(255,255,255,.5); }
-
-.agent-btn-ico {
-width: 32px; height: 32px;
-border-radius: 8px;
-display: flex; align-items: center; justify-content: center;
-font-size: .95rem;
-flex-shrink: 0;
-}
-.agent-btn-text { flex: 1; min-width: 0; }
-.agent-btn-name {
-font-size: .78rem;
-font-weight: 600;
-color: var(–brand-dark);
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-.agent-btn-sub {
-font-size: .62rem;
-color: var(–brand-muted);
-margin-top: .05rem;
-}
-
-/* ── CONTENT AREA ── */
-.content {
-flex: 1;
-overflow-y: auto;
--webkit-overflow-scrolling: touch;
-padding: 1.2rem;
-}
-.content::-webkit-scrollbar { width: 3px; }
-.content::-webkit-scrollbar-thumb { background: var(–brand-border); border-radius: 3px; }
-
-/* ═══════════════════════════════════
-MODULE PANELS
-═══════════════════════════════════ */
-.module { display: none; height: 100%; }
-.module.active { display: flex; }
-
-/* ── GENERATE MODULE ── */
-.gen-panel {
-display: flex;
-flex-direction: column;
-gap: 1rem;
-height: 100%;
-}
-
-.agent-header-card {
-background: var(–brand-dark);
-border-radius: var(–radius);
-padding: 1.1rem 1.2rem;
-display: flex;
-align-items: center;
-gap: .9rem;
-flex-shrink: 0;
-}
-.agent-header-ico {
-width: 48px; height: 48px;
-border-radius: 12px;
-display: flex; align-items: center; justify-content: center;
-font-size: 1.4rem;
-background: rgba(255,255,255,.08);
-flex-shrink: 0;
-}
-.agent-header-info { flex: 1; }
-.agent-header-name {
-font-family: ‘Libre Baskerville’, serif;
-font-size: 1rem;
-color: #fff;
-font-weight: 400;
-}
-.agent-header-desc {
-font-size: .73rem;
-color: var(–brand-accent);
-margin-top: .2rem;
-line-height: 1.4;
-}
-
-.gen-form {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: 1.1rem;
-flex-shrink: 0;
-}
-.form-row { margin-bottom: .8rem; }
-.form-row:last-child { margin-bottom: 0; }
-.form-label {
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .1em;
-text-transform: uppercase;
-color: var(–brand-muted);
-margin-bottom: .35rem;
-display: block;
-}
-.form-input, .form-select, .form-textarea {
-width: 100%;
-padding: .65rem .85rem;
-border: 1.5px solid var(–brand-border);
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: .82rem;
-color: var(–brand-dark);
-background: var(–brand-bg);
-outline: none;
-transition: border-color .2s;
--webkit-appearance: none;
-}
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-border-color: var(–brand-accent);
-}
-.form-textarea { resize: none; min-height: 80px; line-height: 1.5; }
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
-
-.gen-btn {
-width: 100%;
-padding: .85rem;
-background: var(–brand-dark);
-color: var(–brand-accent);
-border: none;
-border-radius: var(–radius-sm);
-font-family: ‘DM Sans’, sans-serif;
-font-size: .8rem;
-font-weight: 600;
-letter-spacing: .06em;
-cursor: pointer;
-transition: opacity .2s, transform .1s;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: .5rem;
-}
-.gen-btn:active { transform: scale(.98); }
-.gen-btn:disabled { opacity: .5; cursor: not-allowed; }
-.gen-btn .spinner {
-width: 14px; height: 14px;
-border: 2px solid rgba(184,160,112,.3);
-border-top-color: var(–brand-accent);
-border-radius: 50%;
-animation: spin .7s linear infinite;
-display: none;
-}
-.gen-btn.loading .spinner { display: block; }
-.gen-btn.loading .btn-label { display: none; }
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.output-card {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-flex: 1;
-min-height: 200px;
-overflow: hidden;
-display: flex;
-flex-direction: column;
-}
-.output-card-head {
-padding: .7rem 1rem;
-border-bottom: 1px solid var(–brand-border);
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-shrink: 0;
-}
-.output-card-title {
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .12em;
-text-transform: uppercase;
-color: var(–brand-muted);
-}
-.copy-all-btn {
-font-size: .62rem;
-font-weight: 600;
-padding: .25rem .6rem;
-border-radius: 5px;
-background: var(–brand-dark);
-color: var(–brand-accent);
-border: none;
-cursor: pointer;
-font-family: ‘DM Sans’, sans-serif;
-transition: opacity .2s;
-}
-.output-card-body {
-flex: 1;
-overflow-y: auto;
-padding: 1rem;
-font-size: .82rem;
-line-height: 1.7;
-color: var(–brand-dark);
-white-space: pre-wrap;
-}
-.output-card-body::-webkit-scrollbar { width: 3px; }
-.output-placeholder {
-color: var(–brand-muted);
-font-style: italic;
-font-size: .78rem;
-padding: 1.5rem 0;
-text-align: center;
-}
-
-/* ── CALENDAR MODULE ── */
-.cal-layout {
-display: flex;
-flex-direction: column;
-gap: 1rem;
-height: 100%;
-}
-
-.cal-header {
-display: flex;
-align-items: center;
-gap: .8rem;
-flex-shrink: 0;
-}
-.cal-nav-btn {
-width: 34px; height: 34px;
-border-radius: 50%;
-border: 1.5px solid var(–brand-border);
-background: #fff;
-display: flex; align-items: center; justify-content: center;
-cursor: pointer;
-font-size: .8rem;
-color: var(–brand-dark);
-flex-shrink: 0;
-}
-.cal-month-title {
-font-family: ‘Libre Baskerville’, serif;
-font-size: 1.05rem;
-font-weight: 400;
-color: var(–brand-dark);
-flex: 1;
-}
-
-.cal-grid-wrap {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-overflow: hidden;
-flex-shrink: 0;
-}
-.cal-days-header {
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-background: var(–brand-pale);
-border-bottom: 1px solid var(–brand-border);
-}
-.cal-day-name {
-padding: .45rem 0;
-text-align: center;
-font-size: .6rem;
-font-weight: 600;
-letter-spacing: .08em;
-text-transform: uppercase;
-color: var(–brand-muted);
-}
-.cal-grid {
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-}
-.cal-cell {
-min-height: 56px;
-border-right: 1px solid var(–brand-border);
-border-bottom: 1px solid var(–brand-border);
-padding: .3rem .35rem;
-cursor: pointer;
-transition: background .15s;
-position: relative;
-}
-.cal-cell:nth-child(7n) { border-right: none; }
-.cal-cell:hover { background: var(–brand-pale); }
-.cal-cell.today { background: rgba(184,160,112,.1); }
-.cal-cell-num {
-font-size: .68rem;
-font-weight: 600;
-color: var(–brand-muted);
-margin-bottom: .2rem;
-}
-.cal-cell.today .cal-cell-num {
-color: var(–brand-accent);
-}
-.cal-event {
-font-size: .55rem;
-font-weight: 600;
-padding: .12rem .3rem;
-border-radius: 3px;
-margin-bottom: 2px;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-max-width: 100%;
-}
-.ev-pin { background: #ffe8ec; color: #a0102a; }
-.ev-ig  { background: #f0e8f8; color: #5a1a8a; }
-.ev-lt  { background: #fdeee0; color: #7a3010; }
-.ev-blog{ background: #e8f2e8; color: #1a5a1a; }
-
-.cal-upcoming {
-flex: 1;
-overflow-y: auto;
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: .8rem 1rem;
-}
-.cal-upcoming::-webkit-scrollbar { display: none; }
-.upcoming-title {
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .12em;
-text-transform: uppercase;
-color: var(–brand-muted);
-margin-bottom: .7rem;
-}
-.upcoming-item {
-display: flex;
-align-items: center;
-gap: .7rem;
-padding: .6rem 0;
-border-bottom: 1px solid var(–brand-border);
-}
-.upcoming-item:last-child { border-bottom: none; }
-.upcoming-dot {
-width: 8px; height: 8px;
-border-radius: 50%;
-flex-shrink: 0;
-}
-.upcoming-text { flex: 1; }
-.upcoming-name {
-font-size: .78rem;
-font-weight: 500;
-color: var(–brand-dark);
-}
-.upcoming-meta {
-font-size: .65rem;
-color: var(–brand-muted);
-margin-top: .1rem;
-}
-.upcoming-platform {
-font-size: .6rem;
-font-weight: 600;
-padding: .15rem .45rem;
-border-radius: 4px;
-}
-
-/* ── ANALYTICS MODULE ── */
-.analytics-layout {
-display: flex;
-flex-direction: column;
-gap: 1rem;
-}
-.stats-row {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: .7rem;
-}
-.stat-card {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: 1rem;
-}
-.stat-label {
-font-size: .62rem;
-font-weight: 600;
-letter-spacing: .1em;
-text-transform: uppercase;
-color: var(–brand-muted);
-margin-bottom: .4rem;
-}
-.stat-val {
-font-family: ‘Libre Baskerville’, serif;
-font-size: 1.6rem;
-font-weight: 400;
-color: var(–brand-dark);
-line-height: 1;
-}
-.stat-delta {
-font-size: .68rem;
-margin-top: .3rem;
-color: #3a8a3a;
-font-weight: 500;
-}
-.stat-delta.neg { color: #8a3a3a; }
-
-.bar-chart-card {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: 1rem;
-}
-.bar-chart-title {
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .1em;
-text-transform: uppercase;
-color: var(–brand-muted);
-margin-bottom: .9rem;
-}
-.bar-chart {
-display: flex;
-align-items: flex-end;
-gap: .35rem;
-height: 80px;
-}
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: .25rem; }
-.bar {
-width: 100%;
-border-radius: 4px 4px 0 0;
-transition: height .6s ease;
-min-height: 4px;
-}
-.bar-lbl { font-size: .55rem; color: var(–brand-muted); font-weight: 500; }
-
-.insights-card {
-background: var(–brand-dark);
-border-radius: var(–radius);
-padding: 1.1rem;
-}
-.insights-title {
-font-family: ‘Libre Baskerville’, serif;
-font-size: .85rem;
-color: var(–brand-accent);
-margin-bottom: .8rem;
-}
-.insight-item {
-display: flex;
-gap: .6rem;
-margin-bottom: .55rem;
-align-items: flex-start;
-}
-.insight-dot {
-width: 6px; height: 6px;
-border-radius: 50%;
-background: var(–brand-accent);
-flex-shrink: 0;
-margin-top: .35rem;
-}
-.insight-text {
-font-size: .75rem;
-color: rgba(255,255,255,.75);
-line-height: 1.5;
-}
-.insight-text strong { color: #fff; }
-
-/* ── RECIPE BOOK MODULE ── */
-.recipe-layout {
-display: flex;
-flex-direction: column;
-gap: 1rem;
-height: 100%;
-}
-
-.recipe-toolbar {
-display: flex;
-gap: .6rem;
-flex-shrink: 0;
-}
-.recipe-toolbar-btn {
-padding: .55rem .9rem;
-border-radius: var(–radius-sm);
-border: 1.5px solid var(–brand-border);
-background: #fff;
-font-family: ‘DM Sans’, sans-serif;
-font-size: .72rem;
-font-weight: 600;
-color: var(–brand-dark);
-cursor: pointer;
-display: flex;
-align-items: center;
-gap: .35rem;
-transition: all .2s;
-}
-.recipe-toolbar-btn.primary {
-background: var(–brand-dark);
-color: var(–brand-accent);
-border-color: var(–brand-dark);
-}
-
-.recipes-list {
-flex: 1;
-overflow-y: auto;
-display: flex;
-flex-direction: column;
-gap: .6rem;
-}
-.recipes-list::-webkit-scrollbar { display: none; }
-
-.recipe-card {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: 1rem 1.1rem;
-display: flex;
-align-items: center;
-gap: .9rem;
-cursor: pointer;
-transition: box-shadow .2s, transform .15s;
-}
-.recipe-card:active { transform: scale(.99); }
-.recipe-card:hover { box-shadow: var(–shadow); }
-.recipe-emoji {
-font-size: 1.6rem;
-width: 48px; height: 48px;
-background: var(–brand-pale);
-border-radius: 10px;
-display: flex; align-items: center; justify-content: center;
-flex-shrink: 0;
-}
-.recipe-info { flex: 1; }
-.recipe-name {
-font-family: ‘Libre Baskerville’, serif;
-font-size: .88rem;
-color: var(–brand-dark);
-font-weight: 400;
-}
-.recipe-meta {
-font-size: .68rem;
-color: var(–brand-muted);
-margin-top: .2rem;
-}
-.recipe-tags { display: flex; gap: .3rem; margin-top: .35rem; flex-wrap: wrap; }
-.recipe-tag {
-font-size: .58rem;
-font-weight: 600;
-padding: .12rem .4rem;
-border-radius: 4px;
-background: var(–brand-pale);
-color: var(–brand-muted);
-}
-
-/* ── RECIPE DETAIL PANEL ── */
-.recipe-detail {
-display: none;
-flex-direction: column;
-gap: 1rem;
-height: 100%;
-}
-.recipe-detail.active { display: flex; }
-
-.detail-back {
-display: flex;
-align-items: center;
-gap: .5rem;
-font-size: .75rem;
-font-weight: 600;
-color: var(–brand-muted);
-cursor: pointer;
-flex-shrink: 0;
-padding: .3rem 0;
-}
-.detail-hero {
-background: var(–brand-dark);
-border-radius: var(–radius);
-padding: 1.3rem;
-flex-shrink: 0;
-}
-.detail-hero-name {
-font-family: ‘Libre Baskerville’, serif;
-font-size: 1.2rem;
-color: #fff;
-font-weight: 400;
-margin-bottom: .3rem;
-}
-.detail-hero-sub { font-size: .75rem; color: var(–brand-accent); }
-
-.detail-body {
-flex: 1;
-overflow-y: auto;
-display: flex;
-flex-direction: column;
-gap: .8rem;
-}
-.detail-body::-webkit-scrollbar { display: none; }
-
-.detail-section {
-background: #fff;
-border: 1px solid var(–brand-border);
-border-radius: var(–radius);
-padding: 1rem;
-}
-.detail-section-title {
-font-size: .65rem;
-font-weight: 600;
-letter-spacing: .1em;
-text-transform: uppercase;
-color: var(–brand-muted);
-margin-bottom: .6rem;
-}
-.ingredient-list { list-style: none; }
-.ingredient-item {
-display: flex;
-justify-content: space-between;
-font-size: .8rem;
-padding: .35rem 0;
-border-bottom: 1px solid var(–brand-border);
-color: var(–brand-dark);
-}
-.ingredient-item:last-child { border-bottom: none; }
-.ingredient-qty { color: var(–brand-muted); font-weight: 500; }
-
-.step-list { list-style: none; }
-.step-item {
-display: flex;
-gap: .7rem;
-padding: .5rem 0;
-border-bottom: 1px solid var(–brand-border);
-font-size: .8rem;
-color: var(–brand-dark);
-line-height: 1.55;
-}
-.step-item:last-child { border-bottom: none; }
-.step-num {
-width: 20px; height: 20px;
-border-radius: 50%;
-background: var(–brand-dark);
-color: var(–brand-accent);
-font-size: .62rem;
-font-weight: 700;
-display: flex; align-items: center; justify-content: center;
-flex-shrink: 0;
-margin-top: .1rem;
-}
-
-/* ── MODAL (quick prompt) ── */
-.modal-overlay {
-display: none;
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,.4);
-z-index: 500;
-align-items: flex-end;
-justify-content: center;
-backdrop-filter: blur(3px);
-}
-.modal-overlay.open { display: flex; }
-.modal-sheet {
-width: 100%;
-max-width: 700px;
-background: var(–brand-bg);
-border-radius: var(–radius) var(–radius) 0 0;
-padding: 1.2rem 1.3rem 2rem;
-animation: slideUp .3s ease;
-max-height: 85vh;
-overflow-y: auto;
-}
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.modal-handle {
-width: 36px; height: 4px;
-border-radius: 2px;
-background: var(–brand-border);
-margin: 0 auto .9rem;
-}
-.modal-title {
-font-family: ‘Libre Baskerville’, serif;
-font-size: 1rem;
-color: var(–brand-dark);
-margin-bottom: 1rem;
-}
-.modal-close {
-float: right;
-font-size: 1.1rem;
-cursor: pointer;
-color: var(–brand-muted);
-background: none;
-border: none;
-line-height: 1;
-padding: .2rem;
-}
-
-/* ── BOTTOM NAV (mobile fallback) ── */
-.bottom-nav {
-display: none;
-}
-
-/* ── RESPONSIVE ── */
-@media (max-width: 680px) {
-.sidebar { display: none; }
-.bottom-nav {
-display: flex;
-flex-shrink: 0;
-border-top: 1px solid var(–brand-border);
-background: var(–brand-bg);
-}
-.bottom-nav-btn {
-flex: 1;
-padding: .6rem .3rem .5rem;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: .2rem;
-cursor: pointer;
-border: none;
-background: none;
-font-family: ‘DM Sans’, sans-serif;
-}
-.bottom-nav-ico { font-size: 1.1rem; }
-.bottom-nav-lbl {
-font-size: .55rem;
-font-weight: 600;
-letter-spacing: .06em;
-color: var(–brand-muted);
-text-transform: uppercase;
-}
-.bottom-nav-btn.active .bottom-nav-lbl { color: var(–brand-accent); }
-}
-
-/* ── SCROLLBAR global ── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(–brand-border); border-radius: 4px; }
-
-/* ── UTILS ── */
-.hidden { display: none !important; }
-.tag-kb { background: #e8f0e8; color: #1a5a2a; }
-.tag-lt { background: #fdeee0; color: #7a3010; }
+.sb-label { font-size:.58rem; letter-spacing:.15em; text-transform:uppercase; color:#8a9e7e; font-weight:600; padding:.5rem .5rem .2rem; }
+.sb-sep { height:1px; background:#ddd8ce; margin:.4rem .3rem; }
+.abtn { display:flex; align-items:center; gap:.5rem; width:100%; padding:.55rem .6rem; border-radius:7px; border:none; background:transparent; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; margin-bottom:2px; }
+.abtn.on { background:#1a2e1c; }
+.abtn.on .aname { color:#b8a070; }
+.abtn.on .asub { color:rgba(255,255,255,.5); }
+.aico { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.9rem; flex-shrink:0; }
+.aname { font-size:.75rem; font-weight:600; color:#2a3a2c; }
+.asub { font-size:.6rem; color:#8a9e7e; margin-top:.1rem; }
+.content { flex:1; overflow-y:auto; padding:1rem; }
+.panel { display:none; }
+.panel.on { display:block; }
+.agent-sec { display:none; }
+.agent-sec.on { display:block; }
+.agent-hd { background:#1a2e1c; border-radius:12px; padding:1rem 1.1rem; display:flex; align-items:center; gap:.8rem; margin-bottom:.8rem; }
+.agent-hd-ico { width:44px; height:44px; border-radius:10px; background:rgba(255,255,255,.08); display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0; }
+.agent-hd-name { font-family:'Libre Baskerville',serif; font-size:.95rem; color:#fff; font-weight:400; }
+.agent-hd-desc { font-size:.72rem; color:#b8a070; margin-top:.2rem; line-height:1.4; }
+.form-card { background:#fff; border:1px solid #ddd8ce; border-radius:12px; padding:1rem; margin-bottom:.8rem; }
+.flabel { font-size:.63rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#8a9e7e; margin-bottom:.3rem; display:block; }
+.finput, .fselect, .ftextarea { width:100%; padding:.6rem .8rem; border:1.5px solid #ddd8ce; border-radius:7px; font-family:'DM Sans',sans-serif; font-size:.82rem; color:#2a3a2c; background:#f7f4ef; outline:none; margin-bottom:.7rem; -webkit-appearance:none; appearance:none; }
+.finput:focus, .fselect:focus, .ftextarea:focus { border-color:#b8a070; }
+.ftextarea { resize:none; height:80px; line-height:1.5; }
+.frow2 { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+.genbtn { width:100%; padding:.85rem; background:#1a2e1c; color:#b8a070; border:none; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:.82rem; font-weight:600; cursor:pointer; margin-bottom:.8rem; display:flex; align-items:center; justify-content:center; gap:.5rem; -webkit-appearance:none; appearance:none; }
+.spinner { width:14px; height:14px; border:2px solid rgba(184,160,112,.3); border-top-color:#b8a070; border-radius:50%; animation:spin .7s linear infinite; display:none; }
+.genbtn.loading .spinner { display:inline-block; }
+.genbtn.loading .btnlabel { display:none; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.out-card { background:#fff; border:1px solid #ddd8ce; border-radius:12px; overflow:hidden; min-height:150px; }
+.out-head { padding:.6rem 1rem; border-bottom:1px solid #ddd8ce; display:flex; justify-content:space-between; align-items:center; }
+.out-title { font-size:.63rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#8a9e7e; }
+.copybtn { font-size:.62rem; font-weight:600; padding:.25rem .6rem; border-radius:5px; background:#1a2e1c; color:#b8a070; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.out-body { padding:1rem; font-size:.82rem; line-height:1.7; color:#2a3a2c; white-space:pre-wrap; min-height:120px; }
+.out-ph { color:#8a9e7e; font-style:italic; font-size:.78rem; text-align:center; padding:2rem 1rem; }
+.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin-bottom:.8rem; }
+.stat-card { background:#fff; border:1px solid #ddd8ce; border-radius:12px; padding:.9rem; }
+.stat-label { font-size:.6rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#8a9e7e; margin-bottom:.3rem; }
+.stat-val { font-family:'Libre Baskerville',serif; font-size:1.5rem; color:#1a2e1c; line-height:1; }
+.stat-delta { font-size:.65rem; color:#3a8a3a; margin-top:.25rem; }
+.insights-card { background:#1a2e1c; border-radius:12px; padding:1.1rem; }
+.ins-title { font-family:'Libre Baskerville',serif; font-size:.88rem; color:#b8a070; margin-bottom:.7rem; }
+.ins-item { display:flex; gap:.5rem; margin-bottom:.5rem; }
+.ins-dot { width:6px; height:6px; border-radius:50%; background:#b8a070; flex-shrink:0; margin-top:.35rem; }
+.ins-text { font-size:.75rem; color:rgba(247,244,239,.75); line-height:1.5; }
+.ins-text strong { color:#fff; }
+.cal-month { display:flex; align-items:center; gap:.8rem; margin-bottom:.8rem; }
+.cal-nav { width:32px; height:32px; border-radius:50%; border:1.5px solid #ddd8ce; background:#fff; font-size:.85rem; color:#2a3a2c; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.cal-title { font-family:'Libre Baskerville',serif; font-size:1rem; color:#1a2e1c; flex:1; }
+.cal-wrap { background:#fff; border:1px solid #ddd8ce; border-radius:12px; overflow:hidden; margin-bottom:.8rem; }
+.cal-days { display:grid; grid-template-columns:repeat(7,1fr); background:#ede9e1; }
+.cal-dn { padding:.4rem 0; text-align:center; font-size:.58rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#8a9e7e; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); }
+.cal-cell { min-height:50px; border-right:1px solid #ddd8ce; border-bottom:1px solid #ddd8ce; padding:.25rem .3rem; }
+.cal-cell:nth-child(7n) { border-right:none; }
+.cal-num { font-size:.65rem; font-weight:600; color:#8a9e7e; margin-bottom:.15rem; }
+.cal-cell.today .cal-num { color:#b8a070; }
+.ev { font-size:.52rem; font-weight:600; padding:.1rem .25rem; border-radius:3px; margin-bottom:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ev-pin { background:#ffe8ec; color:#a0102a; }
+.ev-ig { background:#f0e8f8; color:#5a1a8a; }
+.ev-lt { background:#fdeee0; color:#7a3010; }
+.ev-blog { background:#e8f2e8; color:#1a5a1a; }
+.upcoming-card { background:#fff; border:1px solid #ddd8ce; border-radius:12px; padding:.8rem 1rem; }
+.up-title { font-size:.63rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:#8a9e7e; margin-bottom:.6rem; }
+.up-item { display:flex; align-items:center; gap:.6rem; padding:.5rem 0; border-bottom:1px solid #ddd8ce; }
+.up-item:last-child { border-bottom:none; }
+.up-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.up-name { font-size:.78rem; font-weight:500; color:#2a3a2c; }
+.up-meta { font-size:.63rem; color:#8a9e7e; }
+.up-tag { font-size:.58rem; font-weight:600; padding:.15rem .4rem; border-radius:4px; margin-left:auto; }
+.rec-toolbar { display:flex; gap:.6rem; margin-bottom:.8rem; }
+.rec-btn { padding:.55rem .9rem; border-radius:8px; border:1.5px solid #ddd8ce; background:#fff; font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:600; color:#2a3a2c; cursor:pointer; }
+.rec-btn.primary { background:#1a2e1c; color:#b8a070; border-color:#1a2e1c; }
+.rec-card { background:#fff; border:1px solid #ddd8ce; border-radius:12px; padding:.9rem 1rem; display:flex; align-items:center; gap:.8rem; margin-bottom:.6rem; }
+.rec-emoji { width:44px; height:44px; background:#ede9e1; border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.rec-name { font-family:'Libre Baskerville',serif; font-size:.85rem; color:#1a2e1c; }
+.rec-meta { font-size:.65rem; color:#8a9e7e; margin-top:.15rem; }
+.rec-tags { display:flex; gap:.25rem; margin-top:.3rem; flex-wrap:wrap; }
+.rec-tag { font-size:.56rem; font-weight:600; padding:.1rem .35rem; border-radius:3px; background:#ede9e1; color:#8a9e7e; }
+.hide { display:none !important; }
+.lt-hd { background:#3d1f0a !important; }
+.lt-desc { color:#c4622d !important; }
+.lt-btn { background:#3d1f0a !important; color:#c4622d !important; }
 </style>
-
 </head>
 <body>
 
-<!-- ══════════════════════════════════
-     TOPBAR
-══════════════════════════════════ -->
-
 <div class="topbar">
   <div class="brand-toggle">
-    <button class="brand-btn kb active" onclick="setBrand('kb')">🌿 Klomas</button>
-    <button class="brand-btn lt" onclick="setBrand('lt')">🥘 La Tresse</button>
+    <button class="btab on" id="btab-kb">🌿 Klomas</button>
+    <button class="btab" id="btab-lt">🥘 La Tresse</button>
   </div>
-  <div class="topbar-title" id="topbar-title"><em>Studio IA</em> — Klomas Botanique</div>
-  <div class="topbar-date" id="topbar-date"></div>
+  <div class="topbar-title"><em>Studio IA</em> — Klomas</div>
 </div>
 
-<!-- MODULE TABS -->
-
-<div class="mod-tabs">
-  <button class="mod-tab active" onclick="setModule('generate')" id="tab-generate">
-    <span class="ico">✦</span> Générer
-  </button>
-  <button class="mod-tab" onclick="setModule('calendar')" id="tab-calendar">
-    <span class="ico">📅</span> Calendrier
-  </button>
-  <button class="mod-tab" onclick="setModule('analytics')" id="tab-analytics">
-    <span class="ico">📊</span> Analyse
-  </button>
-  <button class="mod-tab" onclick="setModule('recipes')" id="tab-recipes">
-    <span class="ico">📖</span> Livre Recettes
-  </button>
+<div class="navtabs">
+  <button class="ntab on" id="ntab-generate">✦ Générer</button>
+  <button class="ntab" id="ntab-calendar">📅 Calendrier</button>
+  <button class="ntab" id="ntab-analytics">📊 Analyse</button>
+  <button class="ntab" id="ntab-recipes">📖 Recettes</button>
 </div>
 
-<!-- ══════════════════════════════════
-     MAIN
-══════════════════════════════════ -->
-
-<div class="main">
-
-  <!-- SIDEBAR -->
-
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-section-label" id="sb-brand-label">Klomas Botanique</div>
-
-```
-<div id="sidebar-kb">
-  <button class="agent-btn active" onclick="selectAgent('pin-content')">
-    <div class="agent-btn-ico" style="background:#ffe8ec">📌</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Contenu Pinterest</div>
-      <div class="agent-btn-sub">Pins mère-fille DA</div>
+<div class="layout">
+  <div class="sidebar">
+    <div id="sb-kb">
+      <div class="sb-label">Klomas Botanique</div>
+      <button class="abtn on" id="ab-pin-content"><div class="aico" style="background:#ffe8ec">📌</div><div><div class="aname">Contenu Pinterest</div><div class="asub">Pins mère-fille DA</div></div></button>
+      <button class="abtn" id="ab-pin-publish"><div class="aico" style="background:#fff0e0">🗓️</div><div><div class="aname">Programmation</div><div class="asub">Publication & planning</div></div></button>
+      <button class="abtn" id="ab-pin-analyse"><div class="aico" style="background:#e8f2e8">📊</div><div><div class="aname">Analyse Pins</div><div class="asub">Performance & insights</div></div></button>
+      <button class="abtn" id="ab-copy"><div class="aico" style="background:#f0e8f8">✍️</div><div><div class="aname">Copywriting</div><div class="asub">Textes engageants</div></div></button>
+      <div class="sb-sep"></div>
+      <div class="sb-label">Fondations</div>
+      <button class="abtn" id="ab-niche"><div class="aico" style="background:#e8eef8">🔍</div><div><div class="aname">Analyse de Niche</div><div class="asub">Audience & déclencheurs</div></div></button>
+      <button class="abtn" id="ab-piliers"><div class="aico" style="background:#f0fae8">🏛️</div><div><div class="aname">Piliers de Contenu</div><div class="asub">5 piliers engagement</div></div></button>
     </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('pin-publish')">
-    <div class="agent-btn-ico" style="background:#fff0e0">🗓️</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Programmation</div>
-      <div class="agent-btn-sub">Publication & planning</div>
+    <div id="sb-lt" class="hide">
+      <div class="sb-label">La Tresse by Klomas</div>
+      <button class="abtn on" id="ab-lt-community"><div class="aico" style="background:#fdeee0">👩‍👧</div><div><div class="aname">Communauté IG</div><div class="asub">Stratégie & contenus</div></div></button>
+      <button class="abtn" id="ab-lt-reply"><div class="aico" style="background:#fde8e0">💬</div><div><div class="aname">Réponses & MP</div><div class="asub">Suggestions validées</div></div></button>
+      <button class="abtn" id="ab-lt-schedule"><div class="aico" style="background:#fff0e8">📲</div><div><div class="aname">Programmer contenu</div><div class="asub">Adapté à ta niche</div></div></button>
+      <button class="abtn" id="ab-lt-book"><div class="aico" style="background:#e8f2e8">📗</div><div><div class="aname">Livre de recettes</div><div class="asub">Création en parallèle</div></div></button>
+      <div class="sb-sep"></div>
+      <div class="sb-label">Fondations</div>
+      <button class="abtn" id="ab-lt-niche"><div class="aico" style="background:#fde8d8">🔍</div><div><div class="aname">Analyse de Niche</div><div class="asub">Mamans cuisine naturel</div></div></button>
+      <button class="abtn" id="ab-lt-piliers"><div class="aico" style="background:#fdf0e0">🏛️</div><div><div class="aname">Piliers de Contenu</div><div class="asub">5 piliers communauté</div></div></button>
     </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('pin-analyse')">
-    <div class="agent-btn-ico" style="background:#e8f2e8">📊</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Analyse Pins</div>
-      <div class="agent-btn-sub">Performance & insights</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('copy')">
-    <div class="agent-btn-ico" style="background:#f0e8f8">✍️</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Copywriting</div>
-      <div class="agent-btn-sub">Textes engageants</div>
-    </div>
-  </button>
-  <div style="height:1px;background:var(--brand-border);margin:.5rem .4rem;opacity:.6"></div>
-  <div style="font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-muted);padding:.3rem .7rem;font-weight:600;opacity:.7">Fondations stratégiques</div>
-  <button class="agent-btn" onclick="selectAgent('niche-analyse')">
-    <div class="agent-btn-ico" style="background:#e8eef8">🔍</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Analyse de Niche</div>
-      <div class="agent-btn-sub">Audience & déclencheurs</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('piliers')">
-    <div class="agent-btn-ico" style="background:#f0fae8">🏛️</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Piliers de Contenu</div>
-      <div class="agent-btn-sub">5 piliers engagement max</div>
-    </div>
-  </button>
-</div>
-
-<div id="sidebar-lt" class="hidden">
-  <button class="agent-btn active" onclick="selectAgent('lt-community')">
-    <div class="agent-btn-ico" style="background:#fdeee0">👩‍👧</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Communauté IG</div>
-      <div class="agent-btn-sub">Stratégie & contenus</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('lt-reply')">
-    <div class="agent-btn-ico" style="background:#fde8e0">💬</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Réponses & MP</div>
-      <div class="agent-btn-sub">Suggestions validées</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('lt-schedule')">
-    <div class="agent-btn-ico" style="background:#fff0e8">📲</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Programmer contenu</div>
-      <div class="agent-btn-sub">Adapté à ta niche</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('lt-book')">
-    <div class="agent-btn-ico" style="background:#e8f2e8">📗</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Livre de recettes</div>
-      <div class="agent-btn-sub">Création en parallèle</div>
-    </div>
-  </button>
-  <div style="height:1px;background:var(--brand-border);margin:.5rem .4rem;opacity:.6"></div>
-  <div style="font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand-muted);padding:.3rem .7rem;font-weight:600;opacity:.7">Fondations stratégiques</div>
-  <button class="agent-btn" onclick="selectAgent('lt-niche')">
-    <div class="agent-btn-ico" style="background:#fde8d8">🔍</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Analyse de Niche</div>
-      <div class="agent-btn-sub">Mamans cuisine naturel</div>
-    </div>
-  </button>
-  <button class="agent-btn" onclick="selectAgent('lt-piliers')">
-    <div class="agent-btn-ico" style="background:#fdf0e0">🏛️</div>
-    <div class="agent-btn-text">
-      <div class="agent-btn-name">Piliers de Contenu</div>
-      <div class="agent-btn-sub">5 piliers communauté</div>
-    </div>
-  </button>
-</div>
-```
-
   </div>
-
-  <!-- ══════════════════════════════
-       CONTENT
-  ══════════════════════════════ -->
 
   <div class="content">
 
 ```
-<!-- ── MODULE : GENERATE ── -->
-<div class="module active" id="module-generate">
-  <div class="gen-panel">
+<!-- GENERATE -->
+<div class="panel on" id="panel-generate">
 
-    <!-- Agent header dynamique -->
-    <div class="agent-header-card" id="agent-header">
-      <div class="agent-header-ico" id="agent-ico">📌</div>
-      <div class="agent-header-info">
-        <div class="agent-header-name" id="agent-name">Épingle — Contenu Pinterest</div>
-        <div class="agent-header-desc" id="agent-desc">Génère 5 pins complets avec DA mère-fille, curiosity gap et prompts visuels Canva</div>
-      </div>
+  <div class="agent-sec on" id="sec-pin-content">
+    <div class="agent-hd"><div class="agent-hd-ico">📌</div><div><div class="agent-hd-name">Épingle — Contenu Pinterest</div><div class="agent-hd-desc">Génère 5 pins avec DA mère-fille, curiosity gap et prompts Canva</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Sujet ou titre d'article</label><input class="finput" id="f-pin-article" placeholder="ex: Pourquoi l'eau calcaire abîme les cheveux">
+      <label class="flabel">Mot-clé principal</label><input class="finput" id="f-pin-keyword" placeholder="ex: eau calcaire cheveux">
+      <label class="flabel">Direction artistique</label>
+      <select class="fselect" id="f-pin-da"><option>Mère & fille — transmission botanique</option><option>Mère & fille — rituels partagés</option><option>Concept botanique épuré</option><option>Produits pour 2 générations</option></select>
+      <label class="flabel">Tableau Pinterest cible</label><input class="finput" id="f-pin-board" placeholder="ex: Soins Capillaires Naturels" style="margin-bottom:0">
     </div>
+    <button class="genbtn" id="btn-pin-content"><div class="spinner"></div><span class="btnlabel">✦ Générer avec l'IA</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-pin-content">Copier</button></div><div class="out-body" id="out-pin-content"><div class="out-ph">Le contenu généré apparaîtra ici…</div></div></div>
+  </div>
 
-    <!-- Formulaire dynamique -->
-    <div class="gen-form" id="gen-form">
-      <!-- injecté par JS selon l'agent actif -->
+  <div class="agent-sec" id="sec-pin-publish">
+    <div class="agent-hd"><div class="agent-hd-ico">🗓️</div><div><div class="agent-hd-name">Programmation Pinterest</div><div class="agent-hd-desc">Planifie 5 pins sur 10 jours avec horaires optimaux FR/CH</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Tes 5 titres de pins</label><textarea class="ftextarea" id="f-pub-pins" placeholder="Pin 1 : ...&#10;Pin 2 : ..."></textarea>
+      <label class="flabel">Date de publication de l'article</label><input class="finput" id="f-pub-date" placeholder="ex: 28 avril 2026">
+      <label class="flabel">Tableaux Pinterest</label><input class="finput" id="f-pub-boards" placeholder="ex: Soins naturels, Cheveux" style="margin-bottom:0">
     </div>
+    <button class="genbtn" id="btn-pin-publish"><div class="spinner"></div><span class="btnlabel">✦ Générer le planning</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-pin-publish">Copier</button></div><div class="out-body" id="out-pin-publish"><div class="out-ph">Le planning apparaîtra ici…</div></div></div>
+  </div>
 
-    <button class="gen-btn" id="gen-btn" onclick="runAgent()">
-      <div class="spinner"></div>
-      <span class="btn-label">✦ Générer avec l'IA</span>
-    </button>
-
-    <!-- Output -->
-    <div class="output-card">
-      <div class="output-card-head">
-        <span class="output-card-title">Résultat IA</span>
-        <button class="copy-all-btn" onclick="copyOutput()">Tout copier</button>
-      </div>
-      <div class="output-card-body" id="output-body">
-        <div class="output-placeholder">Le contenu généré apparaîtra ici…</div>
-      </div>
+  <div class="agent-sec" id="sec-pin-analyse">
+    <div class="agent-hd"><div class="agent-hd-ico">📊</div><div><div class="agent-hd-name">Analyse Pins</div><div class="agent-hd-desc">Interprète tes chiffres et génère des recommandations</div></div></div>
+    <div class="form-card">
+      <div class="frow2"><div><label class="flabel">Impressions</label><input class="finput" id="f-ana-imp" placeholder="ex: 4 820" style="margin-bottom:0"></div><div><label class="flabel">Clics</label><input class="finput" id="f-ana-clicks" placeholder="ex: 127" style="margin-bottom:0"></div></div>
+      <div style="height:.7rem"></div>
+      <div class="frow2"><div><label class="flabel">Enregistrements</label><input class="finput" id="f-ana-saves" placeholder="ex: 89" style="margin-bottom:0"></div><div><label class="flabel">Période</label><input class="finput" id="f-ana-period" placeholder="ex: avril 2026" style="margin-bottom:0"></div></div>
+      <div style="height:.7rem"></div>
+      <label class="flabel">Pin le plus performant</label><input class="finput" id="f-ana-top" placeholder="ex: 3 signes eau abîme cheveux" style="margin-bottom:0">
     </div>
+    <button class="genbtn" id="btn-pin-analyse"><div class="spinner"></div><span class="btnlabel">✦ Analyser</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-pin-analyse">Copier</button></div><div class="out-body" id="out-pin-analyse"><div class="out-ph">L'analyse apparaîtra ici…</div></div></div>
+  </div>
 
+  <div class="agent-sec" id="sec-copy">
+    <div class="agent-hd"><div class="agent-hd-ico">✍️</div><div><div class="agent-hd-name">Copywriting Klomas</div><div class="agent-hd-desc">Textes engageants qui attirent une audience qualifiée</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Format</label>
+      <select class="fselect" id="f-copy-format"><option>Légende Instagram</option><option>Description Pinterest</option><option>Email newsletter</option><option>Texte page produit</option><option>Accroche publicitaire</option></select>
+      <label class="flabel">Sujet ou produit</label><input class="finput" id="f-copy-sujet" placeholder="ex: Rinçage Botanique pH 3,5">
+      <label class="flabel">Angle</label>
+      <select class="fselect" id="f-copy-angle"><option>Éducatif — apprendre quelque chose</option><option>Émotionnel — résonance mère-fille</option><option>Transformation — avant/après</option><option>Curiosité — fait surprenant</option></select>
+      <label class="flabel">Call-to-action</label><input class="finput" id="f-copy-cta" placeholder="ex: découvrir le produit" style="margin-bottom:0">
+    </div>
+    <button class="genbtn" id="btn-copy"><div class="spinner"></div><span class="btnlabel">✦ Générer les textes</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-copy">Copier</button></div><div class="out-body" id="out-copy"><div class="out-ph">Les textes apparaîtront ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-niche">
+    <div class="agent-hd"><div class="agent-hd-ico">🔍</div><div><div class="agent-hd-name">Analyse de Niche — Klomas</div><div class="agent-hd-desc">Segments, frustrations, déclencheurs émotionnels</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Ta niche principale</label><input class="finput" id="f-niche-niche" placeholder="ex: soins capillaires naturels, femmes 25-45 ans">
+      <label class="flabel">Segment prioritaire</label>
+      <select class="fselect" id="f-niche-seg"><option>Toute l'audience</option><option>Femmes qui connaissent le rinçage ACV</option><option>Mamans — routine naturelle</option><option>Femmes avec eau calcaire</option></select>
+      <label class="flabel">Concurrents / alternatives</label><input class="finput" id="f-niche-conc" placeholder="ex: vinaigre de cidre, soins bio grande surface" style="margin-bottom:0">
+    </div>
+    <button class="genbtn" id="btn-niche"><div class="spinner"></div><span class="btnlabel">✦ Analyser la niche</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-niche">Copier</button></div><div class="out-body" id="out-niche"><div class="out-ph">L'analyse apparaîtra ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-piliers">
+    <div class="agent-hd"><div class="agent-hd-ico">🏛️</div><div><div class="agent-hd-name">Piliers de Contenu — Klomas</div><div class="agent-hd-desc">5 piliers qui génèrent un maximum d'engagement</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Plateforme cible</label>
+      <select class="fselect" id="f-pil-plat"><option>Pinterest</option><option>Instagram</option><option>Les deux</option></select>
+      <label class="flabel">Objectif principal (3 mois)</label>
+      <select class="fselect" id="f-pil-obj"><option>Croissance abonnés</option><option>Notoriété de marque</option><option>Conversion vers le produit</option><option>Fidélisation communauté</option></select>
+      <label class="flabel">Décris ton audience</label><textarea class="ftextarea" id="f-pil-aud" placeholder="ex: femmes 28-42 ans, connaissent le vinaigre de cidre..." style="margin-bottom:0"></textarea>
+    </div>
+    <button class="genbtn" id="btn-piliers"><div class="spinner"></div><span class="btnlabel">✦ Créer les 5 piliers</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-piliers">Copier</button></div><div class="out-body" id="out-piliers"><div class="out-ph">Les piliers apparaîtront ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-community">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">👩‍👧</div><div><div class="agent-hd-name">Communauté Instagram — La Tresse</div><div class="agent-hd-desc lt-desc">Contenus pour fédérer les mamans qui cuisinent sain</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Thème du contenu</label>
+      <select class="fselect" id="f-ltc-theme"><option>Recette simple & saine</option><option>Astuce cuisine avec enfants</option><option>Ingrédient naturel à découvrir</option><option>Moment maman — bien-être</option><option>Transition vers les produits naturels</option></select>
+      <label class="flabel">Format</label>
+      <select class="fselect" id="f-ltc-format"><option>Reel 30s</option><option>Reel 60s</option><option>Carrousel 6 slides</option><option>Post statique</option><option>Story interactive</option></select>
+      <label class="flabel">Recette ou sujet spécifique</label><input class="finput" id="f-ltc-recette" placeholder="ex: galettes avoine-banane pour les enfants">
+      <label class="flabel">Objectif</label>
+      <select class="fselect" id="f-ltc-obj" style="margin-bottom:0"><option>Gagner des abonnées</option><option>Créer de l'engagement</option><option>Présenter doucement les produits Klomas</option><option>Partage & viralité</option></select>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-community"><div class="spinner"></div><span class="btnlabel">✦ Générer le contenu</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-community">Copier</button></div><div class="out-body" id="out-lt-community"><div class="out-ph">Le contenu apparaîtra ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-reply">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">💬</div><div><div class="agent-hd-name">Réponses & Messages Privés</div><div class="agent-hd-desc lt-desc">Suggestions à valider avant d'envoyer</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Colle le message reçu</label><textarea class="ftextarea" id="f-rep-msg" placeholder="ex: C'est quoi exactement comme produit dans ta recette ?"></textarea>
+      <label class="flabel">Contexte</label>
+      <select class="fselect" id="f-rep-ctx"><option>Commentaire sous un post</option><option>Message privé — question produit</option><option>Message privé — question recette</option><option>Commentaire négatif à gérer</option><option>Demande de collaboration</option></select>
+      <label class="flabel">Ton souhaité</label>
+      <select class="fselect" id="f-rep-tone" style="margin-bottom:0"><option>Chaleureux & personnel</option><option>Professionnel & expert</option><option>Ludique & léger</option><option>Empathique</option></select>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-reply"><div class="spinner"></div><span class="btnlabel">✦ Générer les suggestions</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-reply">Copier</button></div><div class="out-body" id="out-lt-reply"><div class="out-ph">Les suggestions apparaîtront ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-schedule">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">📲</div><div><div class="agent-hd-name">Programmation & Adaptation</div><div class="agent-hd-desc lt-desc">Planifie et adapte chaque contenu à ta niche</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Contenu à programmer</label><textarea class="ftextarea" id="f-sch-cont" placeholder="ex: Reel galettes avoine-banane"></textarea>
+      <label class="flabel">Semaine cible</label><input class="finput" id="f-sch-week" placeholder="ex: semaine du 28 avril">
+      <label class="flabel">Niche prioritaire</label>
+      <select class="fselect" id="f-sch-niche" style="margin-bottom:0"><option>Mamans — cuisine saine enfants</option><option>Femmes — bien-être & naturel</option><option>Transition produits Klomas</option><option>Toutes à égalité</option></select>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-schedule"><div class="spinner"></div><span class="btnlabel">✦ Créer le planning</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-schedule">Copier</button></div><div class="out-body" id="out-lt-schedule"><div class="out-ph">Le planning apparaîtra ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-book">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">📗</div><div><div class="agent-hd-name">Livre de Recettes</div><div class="agent-hd-desc lt-desc">Crée les recettes en parallèle du contenu Instagram</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Nom de la recette</label><input class="finput" id="f-book-nom" placeholder="ex: Granola maison miel-avoine">
+      <label class="flabel">Catégorie</label>
+      <select class="fselect" id="f-book-cat"><option>Petit-déjeuner</option><option>Goûter enfant</option><option>Plat du soir</option><option>Dessert sain</option><option>Snack rapide</option></select>
+      <label class="flabel">Style d'écriture</label>
+      <select class="fselect" id="f-book-style" style="margin-bottom:0"><option>Intime — voix de maman</option><option>Pratique — étapes claires</option><option>Poétique — esthétique botanique</option></select>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-book"><div class="spinner"></div><span class="btnlabel">✦ Créer la recette</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-book">Copier</button></div><div class="out-body" id="out-lt-book"><div class="out-ph">La recette apparaîtra ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-niche">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">🔍</div><div><div class="agent-hd-name">Analyse de Niche — La Tresse</div><div class="agent-hd-desc lt-desc">Segments mamans, frustrations, déclencheurs d'achat</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Ta niche</label><input class="finput" id="f-ltn-niche" placeholder="ex: mamans qui cuisinent sain pour leurs enfants">
+      <label class="flabel">Stade actuel</label>
+      <select class="fselect" id="f-ltn-stade"><option>0 — page inexistante</option><option>1-500 abonnées</option><option>500-2000 abonnées</option><option>2000+ abonnées</option></select>
+      <label class="flabel">Contenu actuel ou prévu</label><textarea class="ftextarea" id="f-ltn-cont" placeholder="ex: recettes saines, astuces cuisine, moments famille..." style="margin-bottom:0"></textarea>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-niche"><div class="spinner"></div><span class="btnlabel">✦ Analyser la niche</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-niche">Copier</button></div><div class="out-body" id="out-lt-niche"><div class="out-ph">L'analyse apparaîtra ici…</div></div></div>
+  </div>
+
+  <div class="agent-sec" id="sec-lt-piliers">
+    <div class="agent-hd lt-hd"><div class="agent-hd-ico">🏛️</div><div><div class="agent-hd-name">Piliers de Contenu — La Tresse</div><div class="agent-hd-desc lt-desc">5 piliers engagement maximum pour la communauté mamans</div></div></div>
+    <div class="form-card">
+      <label class="flabel">Phase actuelle</label>
+      <select class="fselect" id="f-ltp-phase"><option>Phase 1 — Construction (0-1000 abonnées)</option><option>Phase 2 — Engagement (1000-5000)</option><option>Phase 3 — Monétisation douce (5000+)</option></select>
+      <label class="flabel">Ratio cuisine / beauté</label>
+      <select class="fselect" id="f-ltp-ratio"><option>100% cuisine — pas encore de beauté</option><option>80% cuisine / 20% naturel</option><option>60% cuisine / 40% lifestyle naturel</option><option>Équilibré — transition vers Klomas</option></select>
+      <label class="flabel">Ton de la page</label>
+      <select class="fselect" id="f-ltp-ton" style="margin-bottom:0"><option>Authentique & imparfaite</option><option>Experte & pédagogue</option><option>Chaleureuse & inspirante</option></select>
+    </div>
+    <button class="genbtn lt-btn" id="btn-lt-piliers"><div class="spinner"></div><span class="btnlabel">✦ Créer les 5 piliers</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Résultat IA</span><button class="copybtn" id="copy-lt-piliers">Copier</button></div><div class="out-body" id="out-lt-piliers"><div class="out-ph">Les piliers apparaîtront ici…</div></div></div>
+  </div>
+
+</div>
+
+<!-- CALENDAR -->
+<div class="panel" id="panel-calendar">
+  <div class="cal-month">
+    <button class="cal-nav" id="cal-prev">&#8249;</button>
+    <div class="cal-title" id="cal-title">Avril 2026</div>
+    <button class="cal-nav" id="cal-next">&#8250;</button>
+  </div>
+  <div class="cal-wrap">
+    <div class="cal-days"><div class="cal-dn">Lun</div><div class="cal-dn">Mar</div><div class="cal-dn">Mer</div><div class="cal-dn">Jeu</div><div class="cal-dn">Ven</div><div class="cal-dn">Sam</div><div class="cal-dn">Dim</div></div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </div>
+  <div class="upcoming-card">
+    <div class="up-title">Prochaines publications</div>
+    <div class="up-item"><div class="up-dot" style="background:#a0102a"></div><div><div class="up-name">Pin 1 — eau calcaire</div><div class="up-meta">28 avril · 20h00</div></div><div class="up-tag" style="background:#ffe8ec;color:#a0102a">PIN</div></div>
+    <div class="up-item"><div class="up-dot" style="background:#1a5a1a"></div><div><div class="up-name">Article — eau calcaire</div><div class="up-meta">28 avril · 09h00</div></div><div class="up-tag" style="background:#e8f2e8;color:#1a5a1a">BLOG</div></div>
+    <div class="up-item"><div class="up-dot" style="background:#5a1a8a"></div><div><div class="up-name">Reel La Tresse</div><div class="up-meta">29 avril · 18h30</div></div><div class="up-tag" style="background:#f0e8f8;color:#5a1a8a">IG</div></div>
+    <div class="up-item"><div class="up-dot" style="background:#a0102a"></div><div><div class="up-name">Pin 2 — eau calcaire</div><div class="up-meta">30 avril · 20h00</div></div><div class="up-tag" style="background:#ffe8ec;color:#a0102a">PIN</div></div>
   </div>
 </div>
 
-<!-- ── MODULE : CALENDAR ── -->
-<div class="module" id="module-calendar">
-  <div class="cal-layout">
-    <div class="cal-header">
-      <button class="cal-nav-btn" onclick="changeMonth(-1)">‹</button>
-      <div class="cal-month-title" id="cal-title"></div>
-      <button class="cal-nav-btn" onclick="changeMonth(1)">›</button>
-    </div>
-    <div class="cal-grid-wrap">
-      <div class="cal-days-header">
-        <div class="cal-day-name">Lun</div>
-        <div class="cal-day-name">Mar</div>
-        <div class="cal-day-name">Mer</div>
-        <div class="cal-day-name">Jeu</div>
-        <div class="cal-day-name">Ven</div>
-        <div class="cal-day-name">Sam</div>
-        <div class="cal-day-name">Dim</div>
-      </div>
-      <div class="cal-grid" id="cal-grid"></div>
-    </div>
-    <div class="cal-upcoming">
-      <div class="upcoming-title">Prochaines publications</div>
-      <div id="upcoming-list"></div>
-    </div>
+<!-- ANALYTICS -->
+<div class="panel" id="panel-analytics">
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">Impressions Pinterest</div><div class="stat-val">12 480</div><div class="stat-delta">&#8593; +34% ce mois</div></div>
+    <div class="stat-card"><div class="stat-label">Clics vers le site</div><div class="stat-val">312</div><div class="stat-delta">&#8593; +18% ce mois</div></div>
+    <div class="stat-card"><div class="stat-label">Enregistrements</div><div class="stat-val">847</div><div class="stat-delta">&#8593; +52% ce mois</div></div>
+    <div class="stat-card"><div class="stat-label">Taux de clic</div><div class="stat-val">2,5%</div><div class="stat-delta">&#8593; benchmark : 1,2%</div></div>
+  </div>
+  <div class="insights-card">
+    <div class="ins-title">&#10022; Recommandations IA</div>
+    <div class="ins-item"><div class="ins-dot"></div><div class="ins-text"><strong>Pin du mois :</strong> "3 signes que l'eau calcaire abîme tes cheveux" — 4,2% CTR. Reproduire cet angle curiosity gap.</div></div>
+    <div class="ins-item"><div class="ins-dot"></div><div class="ins-text"><strong>Meilleur horaire :</strong> Vendredi 20h et Samedi 17h génèrent 2x plus d'impressions pour ton audience CH/FR.</div></div>
+    <div class="ins-item"><div class="ins-dot"></div><div class="ins-text"><strong>Direction artistique :</strong> Les pins avec visuel mère-fille ont 38% de taux de sauvegarde supérieur.</div></div>
   </div>
 </div>
 
-<!-- ── MODULE : ANALYTICS ── -->
-<div class="module" id="module-analytics">
-  <div class="analytics-layout">
-    <div class="stats-row" id="stats-row"></div>
-    <div class="bar-chart-card">
-      <div class="bar-chart-title">Impressions 7 derniers jours</div>
-      <div class="bar-chart" id="bar-chart"></div>
-    </div>
-    <div class="insights-card" id="insights-card"></div>
+<!-- RECIPES -->
+<div class="panel" id="panel-recipes">
+  <div class="rec-toolbar">
+    <button class="rec-btn primary" id="btn-new-recipe">&#10022; Nouvelle recette IA</button>
+    <button class="rec-btn" id="btn-export">&#8595; Exporter</button>
   </div>
-</div>
-
-<!-- ── MODULE : RECIPES ── -->
-<div class="module" id="module-recipes">
-  <div class="recipe-layout" id="recipe-list-view">
-    <div class="recipe-toolbar">
-      <button class="recipe-toolbar-btn primary" onclick="openRecipeGen()">
-        ✦ Nouvelle recette IA
-      </button>
-      <button class="recipe-toolbar-btn" onclick="exportBook()">
-        ↓ Exporter le livre
-      </button>
+  <div class="rec-card"><div class="rec-emoji">&#129956;</div><div><div class="rec-name">Pancakes avoine-banane</div><div class="rec-meta">Petit-déjeuner · 4 personnes</div><div class="rec-tags"><span class="rec-tag">Sans gluten</span><span class="rec-tag">Enfants</span></div></div></div>
+  <div class="rec-card"><div class="rec-emoji">&#129367;</div><div><div class="rec-name">Salade lentilles tièdes citron</div><div class="rec-meta">Plat du soir · 4 personnes</div><div class="rec-tags"><span class="rec-tag">Protéines</span><span class="rec-tag">Végétarien</span></div></div></div>
+  <div id="recipe-form" class="hide">
+    <div class="form-card" style="margin-top:.8rem">
+      <label class="flabel">Nom de la recette</label><input class="finput" id="f-rec-nom" placeholder="ex: Tarte rustique à la courge">
+      <label class="flabel">Catégorie</label>
+      <select class="fselect" id="f-rec-cat"><option>Petit-déjeuner</option><option>Goûter enfant</option><option>Plat principal</option><option>Dessert sain</option></select>
+      <label class="flabel">Contraintes / notes</label><textarea class="ftextarea" id="f-rec-notes" placeholder="ex: sans gluten, rapide, adapté aux enfants…" style="margin-bottom:0"></textarea>
     </div>
-    <div class="recipes-list" id="recipes-list"></div>
-  </div>
-  <div class="recipe-detail" id="recipe-detail-view">
-    <div class="detail-back" onclick="closeDetail()">← Retour au livre</div>
-    <div class="detail-hero">
-      <div class="detail-hero-name" id="detail-name"></div>
-      <div class="detail-hero-sub" id="detail-sub"></div>
-    </div>
-    <div class="detail-body" id="detail-body"></div>
+    <button class="genbtn lt-btn" id="btn-gen-recipe"><div class="spinner"></div><span class="btnlabel">&#10022; Créer la recette</span></button>
+    <div class="out-card"><div class="out-head"><span class="out-title">Recette générée</span><button class="copybtn" id="copy-recipe">Copier</button></div><div class="out-body" id="out-recipe"><div class="out-ph">La recette apparaîtra ici…</div></div></div>
   </div>
 </div>
 ```
 
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- BOTTOM NAV (phone) -->
-
-<div class="bottom-nav">
-  <button class="bottom-nav-btn active" onclick="setModule('generate')">
-    <span class="bottom-nav-ico">✦</span>
-    <span class="bottom-nav-lbl">Générer</span>
-  </button>
-  <button class="bottom-nav-btn" onclick="setModule('calendar')">
-    <span class="bottom-nav-ico">📅</span>
-    <span class="bottom-nav-lbl">Calendrier</span>
-  </button>
-  <button class="bottom-nav-btn" onclick="setModule('analytics')">
-    <span class="bottom-nav-ico">📊</span>
-    <span class="bottom-nav-lbl">Analyse</span>
-  </button>
-  <button class="bottom-nav-btn" onclick="setModule('recipes')">
-    <span class="bottom-nav-ico">📖</span>
-    <span class="bottom-nav-lbl">Recettes</span>
-  </button>
-</div>
-
-<!-- MODAL recipe gen -->
-
-<div class="modal-overlay" id="recipe-modal" onclick="closeModal(event)">
-  <div class="modal-sheet">
-    <div class="modal-handle"></div>
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-title">Créer une recette avec l'IA</div>
-    <div class="form-row">
-      <label class="form-label">Nom de la recette</label>
-      <input class="form-input" id="recipe-name-input" placeholder="ex: Tarte rustique à la courge et feta">
-    </div>
-    <div class="form-row-2">
-      <div class="form-row" style="margin:0">
-        <label class="form-label">Catégorie</label>
-        <select class="form-select" id="recipe-cat">
-          <option>Plat principal</option>
-          <option>Dessert</option>
-          <option>Entrée</option>
-          <option>Petit-déjeuner</option>
-          <option>Goûter enfant</option>
-          <option>Snack sain</option>
-        </select>
-      </div>
-      <div class="form-row" style="margin:0">
-        <label class="form-label">Personnes</label>
-        <select class="form-select" id="recipe-serves">
-          <option>2 personnes</option>
-          <option>4 personnes</option>
-          <option>6 personnes</option>
-          <option>Pour toute la famille</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-row" style="margin-top:.8rem">
-      <label class="form-label">Contraintes / notes</label>
-      <textarea class="form-textarea" id="recipe-notes" placeholder="ex: sans gluten, rapide, utilise des produits de saison, adapté aux enfants…"></textarea>
-    </div>
-    <button class="gen-btn" style="margin-top:.5rem" id="recipe-gen-btn" onclick="generateRecipe()">
-      <div class="spinner"></div>
-      <span class="btn-label">✦ Créer la recette</span>
-    </button>
   </div>
 </div>
 
 <script>
-/* ══════════════════════════════════════
-   STATE
-══════════════════════════════════════ */
-let currentBrand = 'kb';
-let currentModule = 'generate';
-let currentAgent = 'pin-content';
-let calYear, calMonth;
-let recipes = [];
-
-/* ══════════════════════════════════════
-   AGENT CONFIGS
-══════════════════════════════════════ */
-const agents = {
-  'pin-content': {
-    ico: '📌', name: 'Épingle — Contenu Pinterest',
-    desc: 'Génère 5 pins complets avec DA mère-fille, curiosity gap et prompts visuels Canva',
-    fields: [
-      { id:'article', type:'input', label:'Sujet ou titre d\'article', placeholder:'ex: Pourquoi l\'eau calcaire abîme les cheveux' },
-      { id:'keyword', type:'input', label:'Mot-clé principal', placeholder:'ex: eau calcaire cheveux' },
-      { id:'da', type:'select', label:'Direction artistique', options:['Mère & fille — transmission botanique','Mère & fille — rituels partagés','Concept botanique épuré (sans personnages)','Produits pour 2 générations'] },
-      { id:'board', type:'input', label:'Tableau Pinterest cible', placeholder:'ex: Soins Capillaires Naturels' },
-    ],
-    systemPrompt: `Tu es Épingle Pro, agent Pinterest expert pour Klomas Botanique, marque suisse de soins capillaires botaniques. La nouvelle direction artistique est basée sur le duo mère-fille : transmission des rituels beauté, héritage botanique entre générations, esthétique douce et chaleureuse tout en restant experte.
-
-Pour chaque pin, génère dans cet ordre :
-1. TITRE (max 100 car.) : curiosity gap, chiffre ou question quand possible
-2. DESCRIPTION (150-300 car.) : promesse + mot-clé + CTA doux
-3. HASHTAGS : 5 hashtags capillaires en français
-4. PROMPT CANVA : visuel mère-fille botanique, fond crème #f7f4ef, vert #1a2e1c, doré #b8a070, Libre Baskerville, 1000×1500px
-5. MOMENT OPTIMAL : jour + heure (audience suisse/française)
-
-Génère 5 pins numérotés, directement, sans introduction.`
-  },
-  'pin-publish': {
-    ico: '🗓️', name: 'Programmation Pinterest',
-    desc: 'Planifie et espace tes publications sur 10 jours avec horaires optimaux',
-    fields: [
-      { id:'pins', type:'textarea', label:'Colle tes 5 titres de pins à programmer', placeholder:'Pin 1 : ...\nPin 2 : ...' },
-      { id:'article_date', type:'input', label:'Date de publication de l\'article', placeholder:'ex: 28 avril 2026' },
-      { id:'boards', type:'input', label:'Tableaux Pinterest disponibles', placeholder:'ex: Soins naturels, Cheveux, Routine beauté' },
-    ],
-    systemPrompt: `Tu es l'agent Programmation de Klomas Botanique. À partir de 5 pins et d'une date d'article, tu génères un planning de publication sur 10 jours avec horaires optimaux pour une audience suisse et française.
-
-Réponds avec un tableau clair :
-| Pin | Titre court | Date | Heure | Tableau |
-
-Puis ajoute 3 conseils de fréquence pour maximiser la portée Pinterest.`
-  },
-  'pin-analyse': {
-    ico: '📊', name: 'Analyse Pins',
-    desc: 'Interprète tes chiffres Pinterest et génère des recommandations concrètes',
-    fields: [
-      { id:'impressions', type:'input', label:'Impressions ce mois', placeholder:'ex: 4 820' },
-      { id:'clicks', type:'input', label:'Clics vers le site', placeholder:'ex: 127' },
-      { id:'saves', type:'input', label:'Enregistrements', placeholder:'ex: 89' },
-      { id:'top_pin', type:'input', label:'Titre du pin le plus performant', placeholder:'ex: 3 signes que l\'eau abîme tes cheveux' },
-    ],
-    systemPrompt: `Tu es l'agent Analyse de Klomas Botanique, expert Pinterest analytics. À partir des chiffres fournis, tu calcules le taux de clic (CTR), le taux d'engagement, et tu compares aux benchmarks Pinterest beauté (CTR moyen 0,5-1,5%).
-
-Fournis :
-1. DIAGNOSTIC en 3 lignes
-2. CE QUI FONCTIONNE (1-2 points)
-3. CE QUI DOIT CHANGER (1-2 points)
-4. 3 ACTIONS CONCRÈTES pour le mois prochain
-Style : direct, chiffré, sans jargon inutile.`
-  },
-  'copy': {
-    ico: '✍️', name: 'Copywriting Klomas',
-    desc: 'Textes engageants qui attirent une audience qualifiée vers Klomas Botanique',
-    fields: [
-      { id:'format', type:'select', label:'Format', options:['Légende Instagram','Description Pinterest','Email newsletter','Texte page produit','Accroche publicitaire','Description vidéo'] },
-      { id:'sujet', type:'input', label:'Sujet ou produit', placeholder:'ex: Rinçage Botanique pH 3,5' },
-      { id:'angle', type:'select', label:'Angle', options:['Éducatif — apprendre quelque chose','Émotionnel — résonance mère-fille','Transformation — avant/après','Curiosité — fait surprenant','Urgence douce — quantité limitée'] },
-      { id:'cta', type:'input', label:'Call-to-action souhaité', placeholder:'ex: découvrir le produit / lire l\'article' },
-    ],
-    systemPrompt: `Tu es l'agent Copywriting de Klomas Botanique, marque suisse de soins capillaires botaniques. Ton style : expert mais accessible, jamais corporatif, toujours sincère. La DA est mère-fille : transmission, rituels, héritage botanique.
-
-Génère le texte demandé en respectant :
-- Hook fort dès la première ligne
-- Ton chaleureux et expert simultanément
-- Langage simple, phrases courtes
-- CTA naturel, jamais agressif
-Propose 2 versions (A/B) pour tester.`
-  },
-  'lt-community': {
-    ico: '👩‍👧', name: 'Communauté Instagram — La Tresse',
-    desc: 'Contenus pour fédérer les mamans qui cuisinent sain pour leurs enfants',
-    fields: [
-      { id:'theme', type:'select', label:'Thème du contenu', options:['Recette simple & saine','Astuce cuisine avec enfants','Ingrédient naturel à découvrir','Moment maman — bien-être','Transition vers les produits naturels'] },
-      { id:'format', type:'select', label:'Format', options:['Reel 30s','Reel 60s','Carrousel 6 slides','Post statique','Story interactive'] },
-      { id:'recette', type:'input', label:'Recette ou sujet spécifique', placeholder:'ex: galettes avoine-banane pour les enfants' },
-      { id:'objectif', type:'select', label:'Objectif', options:['Gagner des abonnées','Créer de l\'engagement','Présenter doucement les produits Klomas','Partage & viralité'] },
-    ],
-    systemPrompt: `Tu es l'agent Communauté de La Tresse by Klomas, page Instagram dédiée aux mamans qui cuisinent sain pour leurs enfants et elles-mêmes, intéressées par les produits naturels.
-
-Objectif stratégique : construire une communauté engagée de mamans avant d'introduire progressivement les produits Klomas Botanique.
-
-Ton style : authentique, chaleureux, maman-to-maman. Jamais parfait, toujours sincère. Langage simple, émotion vraie.
-
-Pour chaque contenu, génère :
-- HOOK (0-3s pour stopper le scroll)
-- DÉVELOPPEMENT (structure par format)
-- LÉGENDE Instagram (émouvante + hashtags)
-- CONSEIL MONTAGE si vidéo
-- MOMENT DE PUBLICATION optimal`
-  },
-  'lt-reply': {
-    ico: '💬', name: 'Réponses & Messages Privés',
-    desc: 'Suggestions de réponses à valider — jamais d\'envoi automatique',
-    fields: [
-      { id:'message', type:'textarea', label:'Colle le commentaire ou MP reçu', placeholder:'ex: "C\'est quoi exactement comme produit dans ta recette ?"' },
-      { id:'context', type:'select', label:'Contexte', options:['Commentaire sous un post','Message privé — question produit','Message privé — question recette','Commentaire négatif à gérer','Question sur les produits Klomas','Demande de collaboration'] },
-      { id:'tone', type:'select', label:'Ton souhaité', options:['Chaleureux & personnel','Professionnel & expert','Ludique & léger','Empathique'] },
-    ],
-    systemPrompt: `Tu es l'agent Réponses de La Tresse by Klomas. Tu génères des SUGGESTIONS de réponses aux commentaires et messages privés. Ces réponses sont relues et validées par la fondatrice avant envoi.
-
-Règles :
-- Ton authentique, maman-to-maman
-- Jamais de réponse générique
-- Si question sur les produits Klomas : réponse naturelle et non commerciale
-- Si question recette : réponse experte et généreuse
-- Toujours terminer par une question ouverte pour prolonger l'échange
-
-Génère 2 options de réponse (courte et longue), puis explique en 1 ligne la stratégie de chaque option.`
-  },
-  'lt-schedule': {
-    ico: '📲', name: 'Programmation & Adaptation Contenu',
-    desc: 'Planifie et adapte chaque contenu à ta niche mamans cuisine',
-    fields: [
-      { id:'contenu', type:'textarea', label:'Contenu à programmer (titre ou description)', placeholder:'ex: Reel galettes avoine-banane' },
-      { id:'semaine', type:'input', label:'Semaine cible', placeholder:'ex: semaine du 28 avril' },
-      { id:'niche', type:'select', label:'Adapter pour quelle niche en priorité', options:['Mamans — cuisine saine enfants','Femmes — bien-être & naturel','Transition produits Klomas','Toutes à égalité'] },
-    ],
-    systemPrompt: `Tu es l'agent Programmation de La Tresse by Klomas. Tu planifies et adaptes chaque contenu à la niche mamans cuisine saine + bien-être naturel.
-
-Pour chaque contenu fourni, génère :
-1. MEILLEUR JOUR & HEURE (Instagram + TikTok, audience française/suisse)
-2. VERSION ADAPTÉE si le texte peut être amélioré pour la niche
-3. CONTENU COMPLÉMENTAIRE à créer en parallèle (story, reel courts, etc.)
-4. CONNEXION STRATÉGIQUE : comment ce contenu rapproche naturellement vers les produits Klomas
-
-Format : clair, actionnable, planning visuel si possible.`
-  },
-  'lt-book': {
-    ico: '📗', name: 'Livre de Recettes',
-    desc: 'Crée les recettes en parallèle du contenu Instagram pour construire le livre',
-    fields: [
-      { id:'recette_nom', type:'input', label:'Nom de la recette', placeholder:'ex: Granola maison miel-avoine' },
-      { id:'categorie', type:'select', label:'Catégorie', options:['Petit-déjeuner','Goûter enfant','Plat du soir','Dessert sain','Snack rapide','Recette de saison'] },
-      { id:'style', type:'select', label:'Style d\'écriture pour le livre', options:['Intime — voix de maman','Pratique — étapes claires','Poétique — esthétique botanique','Pédagogique — expliquer les ingrédients'] },
-    ],
-    systemPrompt: `Tu es l'agent Livre de La Tresse by Klomas. Tu crées des recettes formatées pour un livre de cuisine sur le thème mamans qui cuisinent sain pour leurs enfants et elles-mêmes, avec une sensibilité aux produits naturels et botaniques.
-
-Pour chaque recette, génère :
-- INTRODUCTION (2-3 lignes, voix personnelle, histoire ou souvenir)
-- INGRÉDIENTS (liste précise avec quantités)
-- ÉTAPES (numérotées, claires, ton chaleureux)
-- NOTE BOTANIQUE (1 ingrédient naturel expliqué, lien possible avec la philosophie Klomas)
-- ASTUCE MAMAN (conseil pratique)
-- POUR LE LIVRE : chapeau éditorial (1 phrase poétique pour illustrer la page)
-
-Style : comme si tu écrivais à une amie.`
-  },
-
-  /* ── FRAMEWORK 1 & 3 — KLOMAS ── */
-  'niche-analyse': {
-    ico: '🔍', name: 'Analyse de Niche — Klomas Botanique',
-    desc: 'Framework 1 : segments d\'audience, frustrations, déclencheurs émotionnels et habitudes de consommation',
-    fields: [
-      { id:'niche', type:'input', label:'Ta niche principale', placeholder:'ex: soins capillaires naturels, femmes 25-45 ans' },
-      { id:'produit', type:'input', label:'Produit ou service à analyser', placeholder:'ex: Rinçage Botanique pH 3,5' },
-      { id:'concurrents', type:'input', label:'Concurrents ou alternatives connues', placeholder:'ex: vinaigre de cidre, soins bio grande surface' },
-      { id:'segment', type:'select', label:'Segment prioritaire à analyser', options:['Toute l\'audience','Femmes qui connaissent le rinçage ACV','Mamans — routine naturelle','Femmes avec eau calcaire','Converties cheveux naturels'] },
-    ],
-    systemPrompt: `Agis comme un stratège social media avec plus de 10 ans d'expérience spécialisé dans les marques de beauté naturelle et botanique.
-
-Analyse la niche Klomas Botanique (soins capillaires botaniques suisses, DA mère-fille, produit phare : Rinçage Botanique pH 3,5) et identifie avec précision :
-
-1. LES SEGMENTS D'AUDIENCE LES PLUS RENTABLES
-   — Décris 3 profils précis avec prénom fictif, âge, situation, revenus, plateforme préférée
-
-2. LEURS PLUS GRANDES FRUSTRATIONS
-   — Ce qui les énerve dans leur routine capillaire actuelle
-   — Ce que les marques existantes ne résolvent pas
-
-3. LEURS DÉCLENCHEURS ÉMOTIONNELS
-   — Ce qui les pousse à acheter (peur, désir, appartenance, statut, transmission)
-   — Les mots et phrases qui résonnent
-
-4. LEURS HABITUDES DE CONSOMMATION DE CONTENU
-   — Quand et comment elles consomment du contenu
-   — Formats préférés, durée d'attention, plateformes
-
-5. LES TYPES DE POSTS QUI LES POUSSENT À :
-   — S'abonner : [exemples concrets avec hooks]
-   — Interagir : [exemples concrets avec formats]
-   — Acheter : [exemples concrets avec déclencheurs]
-
-Sois ultra-spécifique, actionnable, basé sur des comportements réels. Adapte tout au contexte Klomas Botanique et à la DA mère-fille.`
-  },
-
-  'piliers': {
-    ico: '🏛️', name: 'Piliers de Contenu — Klomas Botanique',
-    desc: 'Framework 3 : 5 piliers de contenu qui génèrent un maximum d\'engagement pour Klomas',
-    fields: [
-      { id:'plateforme', type:'select', label:'Plateforme cible', options:['Pinterest','Instagram','Les deux'] },
-      { id:'audience_desc', type:'textarea', label:'Décris ton audience principale', placeholder:'ex: femmes 28-42 ans, connaissent le vinaigre de cidre, cherchent une alternative plus précise et botanique...' },
-      { id:'objectif_global', type:'select', label:'Objectif principal des 3 prochains mois', options:['Croissance abonnés','Notoriété de marque','Conversion vers le produit','Fidélisation communauté','Tout à la fois'] },
-    ],
-    systemPrompt: `Tu es un expert en stratégie de contenu ayant fait grandir plusieurs comptes beauté et bien-être à +100K abonnés.
-
-En te basant sur la niche soins capillaires botaniques (Klomas Botanique, Suisse, DA mère-fille, Rinçage Botanique pH 3,5) et l'audience mamans/femmes naturel :
-
-Crée 5 PILIERS DE CONTENU qui génèrent un maximum d'engagement.
-
-Pour chaque pilier, fournis :
-— NOM DU PILIER (court, mémorable)
-— OBJECTIF STRATÉGIQUE (pourquoi ce pilier existe)
-— DESCRIPTION (ce qu'on y publie, le ton, l'angle)
-— 5 EXEMPLES D'IDÉES DE POSTS concrets et prêts à exécuter
-— FORMAT RECOMMANDÉ (Reel, Carrousel, Pin, Story...)
-— FRÉQUENCE IDÉALE par semaine
-— MÉTRIQUES DE SUCCÈS (ce qu'on mesure pour ce pilier)
-
-Les 5 piliers doivent couvrir l'ensemble du funnel :
-Attention → Intérêt → Désir → Action → Fidélité
-
-Adapte chaque pilier à l'identité Klomas Botanique : expertise capillaire, botanique suisse, transmission mère-fille, naturel précis.`
-  },
-
-  /* ── FRAMEWORK 1 & 3 — LA TRESSE ── */
-  'lt-niche': {
-    ico: '🔍', name: 'Analyse de Niche — La Tresse',
-    desc: 'Framework 1 : segments mamans cuisine naturel, frustrations, déclencheurs d\'achat',
-    fields: [
-      { id:'niche_lt', type:'input', label:'Ta niche principale', placeholder:'ex: mamans qui cuisinent sain pour leurs enfants' },
-      { id:'objectif_lt', type:'select', label:'Objectif de la page', options:['Créer une communauté engagée','Pipeline vers Klomas Botanique','Les deux'] },
-      { id:'stade', type:'select', label:'Stade actuel de la communauté', options:['0 — page inexistante','1-500 abonnées','500-2000 abonnées','2000+ abonnées'] },
-      { id:'contenu_actuel', type:'textarea', label:'Décris ton contenu actuel (ou celui prévu)', placeholder:'ex: recettes saines, astuces cuisine, moments famille, produits naturels...' },
-    ],
-    systemPrompt: `Agis comme un stratège social media avec plus de 10 ans d'expérience spécialisé dans les niches lifestyle, famille et bien-être naturel.
-
-Analyse la niche de La Tresse by Klomas : page Instagram pour mamans qui cuisinent sain pour leurs enfants et elles-mêmes, avec un intérêt pour les produits naturels. Objectif à terme : introduire doucement les produits Klomas Botanique.
-
-Identifie avec précision :
-
-1. LES SEGMENTS D'AUDIENCE LES PLUS RENTABLES
-   — 3 profils de mamans précis (prénom, âge, situation familiale, revenu, valeurs)
-   — Lequel est le plus susceptible de devenir cliente Klomas
-
-2. LEURS PLUS GRANDES FRUSTRATIONS
-   — Dans leur vie de maman
-   — Dans leur rapport à la cuisine saine
-   — Dans leur rapport aux produits naturels/beauté
-
-3. LEURS DÉCLENCHEURS ÉMOTIONNELS
-   — Ce qui les fait s'abonner à un compte cuisine
-   — Ce qui les fait acheter un produit naturel
-   — Le pont émotionnel entre cuisine saine ET soins capillaires naturels
-
-4. LEURS HABITUDES DE CONSOMMATION DE CONTENU
-   — Moments de consommation (nuit? pendant repas? weekend?)
-   — Formats préférés (Reels courts? Carrousels éducatifs? Stories authentiques?)
-
-5. LES TYPES DE POSTS QUI LES POUSSENT À :
-   — S'abonner
-   — Commenter et partager
-   — Faire confiance à la marque (et éventuellement acheter Klomas)
-
-Sois très concrète, avec des exemples de hooks et de légendes.`
-  },
-
-  'lt-piliers': {
-    ico: '🏛️', name: 'Piliers de Contenu — La Tresse',
-    desc: 'Framework 3 : 5 piliers engagement maximum pour la communauté mamans',
-    fields: [
-      { id:'phase', type:'select', label:'Phase actuelle de la communauté', options:['Phase 1 — Construction (0-1000 abonnées)','Phase 2 — Engagement (1000-5000)','Phase 3 — Monétisation douce (5000+)'] },
-      { id:'ratio', type:'select', label:'Ratio cuisine / beauté naturelle souhaité', options:['100% cuisine — pas encore de beauté','80% cuisine / 20% naturel','60% cuisine / 40% lifestyle naturel','Équilibré — transition vers Klomas'] },
-      { id:'ton_lt', type:'select', label:'Ton de la page', options:['Authentique & imparfaite','Experte & pédagogue','Chaleureuse & inspirante','Drôle & relatable'] },
-    ],
-    systemPrompt: `Tu es un expert en stratégie de contenu communautaire ayant fait grandir plusieurs comptes lifestyle et famille à +100K abonnés.
-
-En te basant sur La Tresse by Klomas (Instagram, mamans cuisine saine + naturel, pipeline vers Klomas Botanique) :
-
-Crée 5 PILIERS DE CONTENU qui génèrent un maximum d'engagement ET préparent naturellement la communauté à découvrir les produits Klomas.
-
-Pour chaque pilier :
-— NOM DU PILIER
-— MISSION STRATÉGIQUE (ce qu'il construit dans la relation avec l'audience)
-— LIEN SUBTIL AVEC KLOMAS (comment ce pilier prépare la transition, sans vendre)
-— 5 IDÉES DE POSTS concrets avec hook inclus
-— FORMAT (Reel / Carrousel / Story / Post)
-— FRÉQUENCE par semaine
-
-Pense chaque pilier comme une brique : ensemble ils construisent une communauté qui fait confiance à la fondatrice et sera naturellement réceptive aux produits Klomas le moment venu.`
-  }
+var P = {
+  'pin-content': "Tu es Épingle Pro, agent Pinterest expert pour Klomas Botanique, marque suisse de soins capillaires botaniques. Direction artistique mère-fille : transmission des rituels beauté, héritage botanique entre générations.\nPour chaque pin génère : 1.TITRE (max 100 car, curiosity gap) 2.DESCRIPTION (150-300 car) 3.HASHTAGS (5 en français) 4.PROMPT CANVA (fond crème #f7f4ef, vert #1a2e1c, doré #b8a070, 1000x1500px) 5.MOMENT OPTIMAL (audience suisse/française). Génère 5 pins numérotés directement.",
+  'pin-publish': "Tu es l'agent Programmation de Klomas Botanique. Génère un planning de publication sur 10 jours avec horaires optimaux pour audience suisse et française. Format : tableau | Pin | Titre | Date | Heure | Tableau | puis 3 conseils.",
+  'pin-analyse': "Tu es l'agent Analyse de Klomas Botanique. Calcule CTR, taux d'engagement, compare aux benchmarks Pinterest beauté (CTR moyen 0,5-1,5%). Fournis : 1.DIAGNOSTIC 2.CE QUI FONCTIONNE 3.CE QUI DOIT CHANGER 4.3 ACTIONS CONCRÈTES.",
+  'copy': "Tu es l'agent Copywriting de Klomas Botanique. Style expert mais accessible, jamais corporatif. DA mère-fille. Génère le texte avec hook fort, ton chaleureux, CTA naturel. Propose 2 versions A/B.",
+  'niche': "Agis comme un stratège social media 10 ans expérience en beauté naturelle. Analyse la niche Klomas Botanique (soins capillaires suisses, DA mère-fille, Rinçage Botanique pH 3,5). Identifie : 1.SEGMENTS RENTABLES (3 profils précis) 2.FRUSTRATIONS 3.DÉCLENCHEURS ÉMOTIONNELS 4.HABITUDES DE CONSOMMATION 5.TYPES DE POSTS qui font s'abonner/interagir/acheter.",
+  'piliers': "Tu es expert stratégie contenu, comptes beauté +100K abonnés. Pour Klomas Botanique crée 5 PILIERS DE CONTENU. Pour chaque : NOM, OBJECTIF STRATÉGIQUE, DESCRIPTION, 5 IDÉES DE POSTS avec hooks, FORMAT, FRÉQUENCE, MÉTRIQUES. Couvre le funnel Attention à Fidélité.",
+  'lt-community': "Tu es l'agent Communauté de La Tresse by Klomas (Instagram, mamans cuisine saine, pipeline vers Klomas Botanique). Style authentique, maman-to-maman. Pour chaque contenu : HOOK (0-3s), DÉVELOPPEMENT, LÉGENDE Instagram, CONSEIL MONTAGE si vidéo, MOMENT DE PUBLICATION.",
+  'lt-reply': "Tu es l'agent Réponses de La Tresse by Klomas. Génère des SUGGESTIONS de réponses à valider avant envoi. Ton authentique maman-to-maman. Termine toujours par une question ouverte. Génère 2 options (courte et longue) avec explication de la stratégie.",
+  'lt-schedule': "Tu es l'agent Programmation de La Tresse by Klomas. Pour chaque contenu : 1.MEILLEUR JOUR et HEURE (Instagram + TikTok, audience française/suisse) 2.VERSION ADAPTÉE si améliorable 3.CONTENU COMPLÉMENTAIRE 4.CONNEXION STRATÉGIQUE vers les produits Klomas.",
+  'lt-book': "Tu es l'agent Livre de La Tresse by Klomas. Pour chaque recette : INTRODUCTION (voix personnelle), INGRÉDIENTS (quantités précises), ÉTAPES numérotées, NOTE BOTANIQUE (lien avec Klomas), ASTUCE MAMAN, CHAPEAU ÉDITORIAL poétique. Style comme si tu écrivais à une amie.",
+  'lt-niche': "Agis comme stratège social media spécialisé lifestyle/famille/bien-être. Analyse La Tresse by Klomas (mamans cuisine saine, pipeline vers Klomas Botanique). Identifie : 1.SEGMENTS MAMANS RENTABLES (3 profils) 2.FRUSTRATIONS 3.DÉCLENCHEURS ÉMOTIONNELS (pont cuisine saine vers soins naturels) 4.HABITUDES DE CONSOMMATION 5.POSTS qui font s'abonner/commenter/acheter Klomas.",
+  'lt-piliers': "Tu es expert stratégie contenu communautaire. Pour La Tresse by Klomas crée 5 PILIERS DE CONTENU. Pour chaque : NOM, MISSION STRATÉGIQUE, LIEN SUBTIL AVEC KLOMAS, 5 IDÉES DE POSTS avec hooks, FORMAT, FRÉQUENCE. Chaque pilier prépare naturellement la communauté à découvrir Klomas.",
+  'recipe': "Tu es l'agent Livre de La Tresse by Klomas. Crée une recette formatée pour un livre de cuisine mamans/naturel avec : INTRODUCTION (voix intime), INGRÉDIENTS (quantités précises), ÉTAPES (numérotées, claires), NOTE BOTANIQUE, ASTUCE MAMAN, CHAPEAU ÉDITORIAL poétique."
 };
 
-/* ══════════════════════════════════════
-   BRAND SWITCH
-══════════════════════════════════════ */
-function setBrand(brand) {
-  currentBrand = brand;
-  document.querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.brand-btn.' + brand).classList.add('active');
+function gv(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
 
-  const isKb = brand === 'kb';
-  document.getElementById('topbar-title').innerHTML = isKb
-    ? '<em>Studio IA</em> — Klomas Botanique'
-    : '<em>Studio IA</em> — La Tresse by Klomas';
+function buildMsg(id) {
+  var m = {
+    'pin-content': 'Sujet: '+gv('f-pin-article')+'\nMot-clé: '+gv('f-pin-keyword')+'\nDA: '+gv('f-pin-da')+'\nTableau: '+gv('f-pin-board'),
+    'pin-publish': 'Pins: '+gv('f-pub-pins')+'\nDate: '+gv('f-pub-date')+'\nTableaux: '+gv('f-pub-boards'),
+    'pin-analyse': 'Impressions: '+gv('f-ana-imp')+'\nClics: '+gv('f-ana-clicks')+'\nEnregistrements: '+gv('f-ana-saves')+'\nPériode: '+gv('f-ana-period')+'\nTop pin: '+gv('f-ana-top'),
+    'copy': 'Format: '+gv('f-copy-format')+'\nSujet: '+gv('f-copy-sujet')+'\nAngle: '+gv('f-copy-angle')+'\nCTA: '+gv('f-copy-cta'),
+    'niche': 'Niche: '+gv('f-niche-niche')+'\nSegment: '+gv('f-niche-seg')+'\nConcurrents: '+gv('f-niche-conc'),
+    'piliers': 'Plateforme: '+gv('f-pil-plat')+'\nObjectif: '+gv('f-pil-obj')+'\nAudience: '+gv('f-pil-aud'),
+    'lt-community': 'Thème: '+gv('f-ltc-theme')+'\nFormat: '+gv('f-ltc-format')+'\nRecette: '+gv('f-ltc-recette')+'\nObjectif: '+gv('f-ltc-obj'),
+    'lt-reply': 'Message: '+gv('f-rep-msg')+'\nContexte: '+gv('f-rep-ctx')+'\nTon: '+gv('f-rep-tone'),
+    'lt-schedule': 'Contenu: '+gv('f-sch-cont')+'\nSemaine: '+gv('f-sch-week')+'\nNiche: '+gv('f-sch-niche'),
+    'lt-book': 'Recette: '+gv('f-book-nom')+'\nCatégorie: '+gv('f-book-cat')+'\nStyle: '+gv('f-book-style'),
+    'lt-niche': 'Niche: '+gv('f-ltn-niche')+'\nStade: '+gv('f-ltn-stade')+'\nContenu: '+gv('f-ltn-cont'),
+    'lt-piliers': 'Phase: '+gv('f-ltp-phase')+'\nRatio: '+gv('f-ltp-ratio')+'\nTon: '+gv('f-ltp-ton'),
+    'recipe': 'Recette: '+gv('f-rec-nom')+'\nCatégorie: '+gv('f-rec-cat')+'\nNotes: '+gv('f-rec-notes')
+  };
+  return m[id] || '';
+}
 
-  document.getElementById('sb-brand-label').textContent = isKb ? 'Klomas Botanique' : 'La Tresse by Klomas';
-  document.getElementById('sidebar-kb').classList.toggle('hidden', !isKb);
-  document.getElementById('sidebar-lt').classList.toggle('hidden', isKb);
-
-  // CSS vars
-  const r = document.documentElement.style;
-  if (isKb) {
-    r.setProperty('--brand-bg', 'var(--kb-bg)');
-    r.setProperty('--brand-dark', 'var(--kb-dark)');
-    r.setProperty('--brand-accent', 'var(--kb-gold)');
-    r.setProperty('--brand-muted', 'var(--kb-sage)');
-    r.setProperty('--brand-pale', 'var(--kb-pale)');
-    r.setProperty('--brand-border', 'var(--kb-border)');
-  } else {
-    r.setProperty('--brand-bg', 'var(--lt-bg)');
-    r.setProperty('--brand-dark', 'var(--lt-dark)');
-    r.setProperty('--brand-accent', 'var(--lt-terra)');
-    r.setProperty('--brand-muted', '#a07050');
-    r.setProperty('--brand-pale', 'var(--lt-peach)');
-    r.setProperty('--brand-border', 'var(--lt-border)');
+async function callAI(agentId, btnId, outId) {
+  var btn = document.getElementById(btnId);
+  var out = document.getElementById(outId);
+  var msg = buildMsg(agentId);
+  btn.classList.add('loading');
+  btn.disabled = true;
+  out.innerHTML = '<div class="out-ph">Génération en cours…</div>';
+  try {
+    var r = await fetch('/.netlify/functions/claude', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1500, system:P[agentId]||P['pin-content'], messages:[{role:'user',content:msg||'Génère un exemple pour Klomas Botanique.'}]})
+    });
+    var d = await r.json();
+    out.textContent = (d.content && d.content[0] && d.content[0].text) ? d.content[0].text : JSON.stringify(d);
+  } catch(e) {
+    out.textContent = 'Erreur: ' + e.message;
   }
-
-  const firstAgent = isKb ? 'pin-content' : 'lt-community';
-  selectAgent(firstAgent);
-  if (currentModule === 'analytics') renderAnalytics();
+  btn.classList.remove('loading');
+  btn.disabled = false;
 }
 
-/* ══════════════════════════════════════
-   MODULE SWITCH
-══════════════════════════════════════ */
-function setModule(mod) {
-  currentModule = mod;
-  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
-  document.querySelectorAll('.mod-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.remove('active'));
-
-  document.getElementById('module-' + mod).classList.add('active');
-  document.getElementById('tab-' + mod).classList.add('active');
-
-  if (mod === 'calendar') renderCalendar();
-  if (mod === 'analytics') renderAnalytics();
-  if (mod === 'recipes') renderRecipes();
+function docp(outId, btnId) {
+  var t = document.getElementById(outId).textContent;
+  if (navigator.clipboard) { navigator.clipboard.writeText(t); }
+  else { var x=document.createElement('textarea'); x.value=t; document.body.appendChild(x); x.select(); document.execCommand('copy'); document.body.removeChild(x); }
+  var b = document.getElementById(btnId);
+  if(b){b.textContent='✓';setTimeout(function(){b.textContent='Copier';},2000);}
 }
 
-/* ══════════════════════════════════════
-   AGENT SELECT
-══════════════════════════════════════ */
-function selectAgent(id) {
-  currentAgent = id;
-  document.querySelectorAll('.agent-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.agent-btn').forEach(b => {
-    if (b.getAttribute('onclick') === `selectAgent('${id}')`) b.classList.add('active');
-  });
-
-  const a = agents[id];
-  document.getElementById('agent-ico').textContent = a.ico;
-  document.getElementById('agent-name').textContent = a.name;
-  document.getElementById('agent-desc').textContent = a.desc;
-  document.getElementById('output-body').innerHTML = '<div class="output-placeholder">Le contenu généré apparaîtra ici…</div>';
-
-  // Build form
-  let html = '';
-  a.fields.forEach(f => {
-    html += `<div class="form-row"><label class="form-label">${f.label}</label>`;
-    if (f.type === 'input') html += `<input class="form-input" id="field-${f.id}" placeholder="${f.placeholder||''}">`;
-    if (f.type === 'textarea') html += `<textarea class="form-textarea" id="field-${f.id}" placeholder="${f.placeholder||''}"></textarea>`;
-
-```
-if (f.type === 'select') {
-  html += `<select class="form-select" id="field-${f.id}">`;
-  f.options.forEach(o => html += `<option>${o}</option>`);
-  html += `</select>`;
-}
-html += '</div>';
-```
-
-});
-document.getElementById(‘gen-form’).innerHTML = html;
-
-if (currentModule !== ‘generate’) setModule(‘generate’);
+function showAgent(id) {
+  document.querySelectorAll('.agent-sec').forEach(function(s){s.classList.remove('on');});
+  var s = document.getElementById('sec-'+id); if(s) s.classList.add('on');
+  document.querySelectorAll('.abtn').forEach(function(b){b.classList.remove('on');});
+  var b = document.getElementById('ab-'+id); if(b) b.classList.add('on');
+  showPanel('generate');
 }
 
-/* ══════════════════════════════════════
-RUN AGENT (Claude API)
-══════════════════════════════════════ */
-async function runAgent() {
-const a = agents[currentAgent];
-const btn = document.getElementById(‘gen-btn’);
-const out = document.getElementById(‘output-body’);
-
-// Collect fields
-let userMsg = ‘’;
-a.fields.forEach(f => {
-const el = document.getElementById(‘field-’ + f.id);
-if (el && el.value.trim()) userMsg += `${f.label} : ${el.value.trim()}\n`;
-});
-if (!userMsg.trim()) { out.textContent = ‘⚠️ Remplis au moins un champ pour générer.’; return; }
-
-btn.classList.add(‘loading’);
-btn.disabled = true;
-out.textContent = ‘’;
-
-try {
-const resp = await fetch(’/.netlify/functions/claude’, {
-method: ‘POST’,
-headers: { ‘Content-Type’: ‘application/json’ },
-body: JSON.stringify({
-model: ‘claude-sonnet-4-20250514’,
-max_tokens: 1500,
-system: a.systemPrompt,
-messages: [{ role: ‘user’, content: userMsg }]
-})
-});
-const data = await resp.json();
-const text = data.content?.[0]?.text || ‘Erreur : aucune réponse reçue.’;
-out.textContent = text;
-} catch(e) {
-out.textContent = ‘⚠️ Erreur de connexion. Vérifie ta clé API dans les paramètres.’;
-} finally {
-btn.classList.remove(‘loading’);
-btn.disabled = false;
-}
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+  var p = document.getElementById('panel-'+id); if(p) p.classList.add('on');
+  document.querySelectorAll('.ntab').forEach(function(t){t.classList.remove('on');});
+  var t = document.getElementById('ntab-'+id); if(t) t.classList.add('on');
+  if(id==='calendar') renderCal();
 }
 
-function copyOutput() {
-const text = document.getElementById(‘output-body’).textContent;
-navigator.clipboard.writeText(text);
-const btn = document.querySelector(’.copy-all-btn’);
-btn.textContent = ‘✓ Copié’;
-setTimeout(() => btn.textContent = ‘Tout copier’, 2000);
+function setBrand(b) {
+  document.getElementById('sb-kb').classList.toggle('hide', b!=='kb');
+  document.getElementById('sb-lt').classList.toggle('hide', b!=='lt');
+  document.getElementById('btab-kb').classList.toggle('on', b==='kb');
+  document.getElementById('btab-lt').classList.toggle('on', b==='lt');
+  showAgent(b==='kb'?'pin-content':'lt-community');
 }
 
-/* ══════════════════════════════════════
-CALENDAR
-══════════════════════════════════════ */
-const calEvents = [
-{ day:28, month:3, label:‘Article eau calcaire’, type:‘ev-blog’, brand:‘kb’ },
-{ day:28, month:3, label:‘Pin 1 eau calcaire’, type:‘ev-pin’, brand:‘kb’ },
-{ day:29, month:3, label:‘Reel La Tresse’, type:‘ev-lt’, brand:‘lt’ },
-{ day:30, month:3, label:‘Pin 2’, type:‘ev-pin’, brand:‘kb’ },
-{ day:1, month:4, label:‘Carrousel IG’, type:‘ev-ig’, brand:‘kb’ },
-{ day:2, month:4, label:‘Pin 3’, type:‘ev-pin’, brand:‘kb’ },
-{ day:3, month:4, label:‘Recette granola’, type:‘ev-lt’, brand:‘lt’ },
-{ day:4, month:4, label:‘Pin 4’, type:‘ev-pin’, brand:‘kb’ },
-{ day:5, month:4, label:‘Reel La Tresse’, type:‘ev-lt’, brand:‘lt’ },
-{ day:7, month:4, label:‘Pin 5’, type:‘ev-pin’, brand:‘kb’ },
-{ day:8, month:4, label:‘Carrousel IG’, type:‘ev-ig’, brand:‘kb’ },
-{ day:12, month:4, label:‘Article pH soins’, type:‘ev-blog’, brand:‘kb’ },
-];
+var calY, calM;
+var calEvs = [{d:28,m:3,l:'Article',c:'ev-blog'},{d:28,m:3,l:'Pin 1',c:'ev-pin'},{d:29,m:3,l:'Reel',c:'ev-lt'},{d:30,m:3,l:'Pin 2',c:'ev-pin'},{d:1,m:4,l:'Carrousel',c:'ev-ig'},{d:2,m:4,l:'Pin 3',c:'ev-pin'},{d:4,m:4,l:'Pin 4',c:'ev-pin'},{d:7,m:4,l:'Pin 5',c:'ev-pin'},{d:12,m:4,l:'Article pH',c:'ev-blog'}];
+var mN = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 
-function renderCalendar() {
-const now = new Date();
-if (calYear === undefined) { calYear = now.getFullYear(); calMonth = now.getMonth(); }
-
-const months = [‘Janvier’,‘Février’,‘Mars’,‘Avril’,‘Mai’,‘Juin’,‘Juillet’,‘Août’,‘Septembre’,‘Octobre’,‘Novembre’,‘Décembre’];
-document.getElementById(‘cal-title’).textContent = `${months[calMonth]} ${calYear}`;
-
-const firstDay = new Date(calYear, calMonth, 1).getDay();
-const startOffset = (firstDay === 0 ? 6 : firstDay - 1);
-const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-
-let html = ‘’;
-for (let i = 0; i < startOffset; i++) html += ‘<div class="cal-cell" style="background:rgba(0,0,0,.02)"></div>’;
-
-for (let d = 1; d <= daysInMonth; d++) {
-const isToday = d === now.getDate() && calMonth === now.getMonth() && calYear === now.getFullYear();
-const evs = calEvents.filter(e => e.day === d && e.month === calMonth);
-let evHtml = evs.map(e => `<div class="cal-event ${e.type}">${e.label}</div>`).join(’’);
-html += `<div class="cal-cell ${isToday?'today':''}"> <div class="cal-cell-num">${d}</div>${evHtml}</div>`;
-}
-document.getElementById(‘cal-grid’).innerHTML = html;
-
-// upcoming
-const upcoming = [
-{ name:‘Article — eau calcaire’, date:‘28 avril’, time:‘09h00’, platform:‘Blog’, color:’#3a8a3a’, tag:‘BLOG’ },
-{ name:‘Reel La Tresse — galettes’, date:‘29 avril’, time:‘18h30’, platform:‘Instagram’, color:’#5a1a8a’, tag:‘IG’ },
-{ name:‘Pin 1 — eau calcaire’, date:‘28 avril’, time:‘20h00’, platform:‘Pinterest’, color:’#a0102a’, tag:‘PIN’ },
-{ name:‘Pin 2 — eau calcaire’, date:‘30 avril’, time:‘20h00’, platform:‘Pinterest’, color:’#a0102a’, tag:‘PIN’ },
-{ name:‘Article — pH des soins’, date:‘12 mai’, time:‘09h00’, platform:‘Blog’, color:’#3a8a3a’, tag:‘BLOG’ },
-];
-document.getElementById(‘upcoming-list’).innerHTML = upcoming.map(u => ` <div class="upcoming-item"> <div class="upcoming-dot" style="background:${u.color}"></div> <div class="upcoming-text"> <div class="upcoming-name">${u.name}</div> <div class="upcoming-meta">${u.date} · ${u.time}</div> </div> <div class="upcoming-platform" style="background:${u.color}20;color:${u.color}">${u.tag}</div> </div>`).join(’’);
+function renderCal() {
+  var now = new Date();
+  if(!calY){calY=now.getFullYear();calM=now.getMonth();}
+  document.getElementById('cal-title').textContent = mN[calM]+' '+calY;
+  var f = new Date(calY,calM,1).getDay(); var o=f===0?6:f-1;
+  var days = new Date(calY,calM+1,0).getDate();
+  var h='';
+  for(var i=0;i<o;i++) h+='<div class="cal-cell"></div>';
+  for(var d=1;d<=days;d++){
+    var td=(d===now.getDate()&&calM===now.getMonth()&&calY===now.getFullYear());
+    var ev=calEvs.filter(function(e){return e.d===d&&e.m===calM;}).map(function(e){return '<div class="ev '+e.c+'">'+e.l+'</div>';}).join('');
+    h+='<div class="cal-cell'+(td?' today':'')+'"><div class="cal-num">'+d+'</div>'+ev+'</div>';
+  }
+  document.getElementById('cal-grid').innerHTML=h;
 }
 
-function changeMonth(dir) {
-calMonth += dir;
-if (calMonth < 0) { calMonth = 11; calYear–; }
-if (calMonth > 11) { calMonth = 0; calYear++; }
-renderCalendar();
-}
-
-/* ══════════════════════════════════════
-ANALYTICS
-══════════════════════════════════════ */
-function renderAnalytics() {
-const isKb = currentBrand === ‘kb’;
-
-const stats = isKb
-? [
-{ label:‘Impressions Pinterest’, val:‘12 480’, delta:’+34% ce mois’ },
-{ label:‘Clics vers le site’, val:‘312’, delta:’+18% ce mois’ },
-{ label:‘Enregistrements’, val:‘847’, delta:’+52% ce mois’ },
-{ label:‘Taux de clic’, val:‘2,5%’, delta:‘↑ benchmark : 1,2%’ },
-]
-: [
-{ label:‘Abonnées Instagram’, val:‘1 240’, delta:’+89 ce mois’ },
-{ label:‘Portée moyenne’, val:‘3 800’, delta:’+41% ce mois’ },
-{ label:‘Taux d'engagement’, val:‘6,8%’, delta:‘↑ moy. niche : 4%’ },
-{ label:‘Partages & saves’, val:‘234’, delta:’+67% ce mois’ },
-];
-
-document.getElementById(‘stats-row’).innerHTML = stats.map(s => ` <div class="stat-card"> <div class="stat-label">${s.label}</div> <div class="stat-val">${s.val}</div> <div class="stat-delta">${s.delta}</div> </div>`).join(’’);
-
-const bars = isKb
-? [
-{ lbl:‘Lun’, h:45 }, { lbl:‘Mar’, h:72 }, { lbl:‘Mer’, h:55 },
-{ lbl:‘Jeu’, h:88 }, { lbl:‘Ven’, h:95 }, { lbl:‘Sam’, h:68 }, { lbl:‘Dim’, h:82 },
-]
-: [
-{ lbl:‘Lun’, h:30 }, { lbl:‘Mar’, h:80 }, { lbl:‘Mer’, h:45 },
-{ lbl:‘Jeu’, h:75 }, { lbl:‘Ven’, h:60 }, { lbl:‘Sam’, h:90 }, { lbl:‘Dim’, h:50 },
-];
-
-const accent = isKb ? ‘#b8a070’ : ‘#c4622d’;
-document.getElementById(‘bar-chart’).innerHTML = bars.map(b => ` <div class="bar-col"> <div class="bar" style="height:${b.h}%;background:${accent};opacity:.85"></div> <div class="bar-lbl">${b.lbl}</div> </div>`).join(’’);
-
-const insights = isKb
-? [
-{ t:‘Pin du mois’, v:’<strong>“3 signes que l'eau calcaire abîme tes cheveux”</strong> — 4,2% de CTR. Reproduire cet angle curiosity gap.’ },
-{ t:‘Meilleur horaire’, v:‘Vendredi 20h et Samedi 17h génèrent <strong>2× plus d'impressions</strong> pour ton audience CH/FR.’ },
-{ t:‘Direction artistique’, v:‘Les pins avec <strong>visuel mère-fille</strong> ont 38% de taux de sauvegarde supérieur. Renforcer cette DA.’ },
-]
-: [
-{ t:‘Contenu viral’, v:‘Les Reels avec <strong>hook “erreur de maman”</strong> atteignent 3× plus de nouvelles audiences.’ },
-{ t:‘Communauté’, v:’<strong>68% des commentaires</strong> sont de mamans demandant des conseils produits naturels — terrain parfait pour Klomas.’ },
-{ t:‘Prochaine étape’, v:‘Introduire <strong>1 mention douce Klomas</strong> par semaine pour habituer la communauté avant le lancement.’ },
-];
-
-document.getElementById(‘insights-card’).innerHTML = `<div class="insights-title">✦ Recommandations IA</div> ${insights.map(i =>`<div class="insight-item"><div class="insight-dot"></div><div class="insight-text">${i.v}</div></div>`).join('')}`;
-}
-
-/* ══════════════════════════════════════
-RECIPES
-══════════════════════════════════════ */
-const sampleRecipes = [
-{ id:1, emoji:‘🥞’, name:‘Pancakes avoine-banane’, cat:‘Petit-déjeuner’, serves:‘4 personnes’, tags:[‘Sans gluten’,‘Enfants’,‘Rapide’],
-intro:‘C'est la recette du dimanche matin à la maison. Rapide, douce, et les petites mains adorent écraser les bananes.’,
-ingredients:[[‘Flocons d'avoine’,‘150g’],[‘Bananes mûres’,‘2’],[‘Œufs’,‘2’],[‘Lait végétal’,‘100ml’],[‘Huile de coco’,‘1 c.s.’],[‘Cannelle’,‘1 pincée’]],
-steps:[‘Mixer les flocons en farine grossière.’,‘Écraser les bananes à la fourchette.’,‘Mélanger tous les ingrédients en pâte homogène.’,‘Cuire 2 min de chaque côté à feu moyen.’,‘Servir avec miel et fruits frais.’],
-note:‘La banane mûre est un édulcorant naturel complet — plus elle est mûre, plus elle est sucrée et riche en prébiotiques pour la flore intestinale de tes petits.’,
-chapeau:‘Le dimanche sent la cannelle et la douceur partagée.’
-},
-{ id:2, emoji:‘🥗’, name:‘Salade de lentilles tièdes au citron’, cat:‘Plat du soir’, serves:‘4 personnes’, tags:[‘Protéines’,‘Végétarien’,‘Hiver’],
-intro:‘Une recette que ma mère faisait souvent. Nourrissante, lumineuse, parfaite pour les soirs où on veut du bon sans complication.’,
-ingredients:[[‘Lentilles vertes’,‘250g’],[‘Citron bio’,‘1’],[‘Huile d'olive’,‘3 c.s.’],[‘Persil frais’,‘1 bouquet’],[‘Feta’,‘100g’],[‘Ail’,‘1 gousse’]],
-steps:[‘Cuire les lentilles 20 min dans l'eau salée.’,‘Préparer la vinaigrette citron-ail-huile.’,‘Égoutter et mélanger chaud avec la vinaigrette.’,‘Ajouter persil et feta émiettée.’,‘Servir tiède.’],
-note:‘Le citron bio est utilisé en entier — zeste et jus. Les huiles essentielles du zeste ont des propriétés digestives reconnues, et c'est aussi l'ingrédient phare de notre Rinçage Botanique.’,
-chapeau:‘Certains plats sont une déclaration d'amour à la simplicité.’
-},
-];
-
-let currentRecipes = […sampleRecipes];
-
-function renderRecipes() {
-document.getElementById(‘recipe-list-view’).style.display = ‘flex’;
-document.getElementById(‘recipe-detail-view’).classList.remove(‘active’);
-
-document.getElementById(‘recipes-list’).innerHTML = currentRecipes.map(r => `<div class="recipe-card" onclick="openRecipe(${r.id})"> <div class="recipe-emoji">${r.emoji}</div> <div class="recipe-info"> <div class="recipe-name">${r.name}</div> <div class="recipe-meta">${r.cat} · ${r.serves}</div> <div class="recipe-tags">${r.tags.map(t =>`<span class="recipe-tag">${t}</span>`).join('')}</div> </div> <div style="font-size:1.1rem;color:var(--brand-muted)">›</div> </div>`).join(’’);
-}
-
-function openRecipe(id) {
-const r = currentRecipes.find(x => x.id === id);
-document.getElementById(‘detail-name’).textContent = r.name;
-document.getElementById(‘detail-sub’).textContent = `${r.cat} · ${r.serves}`;
-
-document.getElementById(‘detail-body’).innerHTML = `<div class="detail-section"> <div class="detail-section-title">Introduction</div> <p style="font-size:.82rem;line-height:1.7;color:var(--brand-dark);font-style:italic">${r.intro}</p> </div> <div class="detail-section"> <div class="detail-section-title">Ingrédients</div> <ul class="ingredient-list"> ${r.ingredients.map(i =>`<li class="ingredient-item"><span>${i[0]}</span><span class="ingredient-qty">${i[1]}</span></li>`).join('')} </ul> </div> <div class="detail-section"> <div class="detail-section-title">Étapes</div> <ul class="step-list"> ${r.steps.map((s,i) => `<li class="step-item"><div class="step-num">${i+1}</div><div>${s}</div></li>`).join('')} </ul> </div> <div class="detail-section" style="background:var(--brand-dark)"> <div class="detail-section-title" style="color:var(--brand-accent)">Note Botanique 🌿</div> <p style="font-size:.78rem;line-height:1.65;color:rgba(255,255,255,.8)">${r.note}</p> </div> <div class="detail-section" style="border-style:dashed"> <div class="detail-section-title">Pour le livre</div> <p style="font-size:.82rem;font-style:italic;color:var(--brand-muted)">"${r.chapeau}"</p> </div>`;
-
-document.getElementById(‘recipe-list-view’).style.display = ‘none’;
-document.getElementById(‘recipe-detail-view’).classList.add(‘active’);
-}
-
-function closeDetail() {
-document.getElementById(‘recipe-detail-view’).classList.remove(‘active’);
-document.getElementById(‘recipe-list-view’).style.display = ‘flex’;
-}
-
-/* ── Recipe generation ── */
-function openRecipeGen() { document.getElementById(‘recipe-modal’).classList.add(‘open’); }
-function closeModal(e) {
-if (!e || e.target === document.getElementById(‘recipe-modal’) || e.type===‘click’) {
-document.getElementById(‘recipe-modal’).classList.remove(‘open’);
-}
-}
-
-async function generateRecipe() {
-const nom = document.getElementById(‘recipe-name-input’).value.trim();
-const cat = document.getElementById(‘recipe-cat’).value;
-const serves = document.getElementById(‘recipe-serves’).value;
-const notes = document.getElementById(‘recipe-notes’).value.trim();
-if (!nom) return;
-
-const btn = document.getElementById(‘recipe-gen-btn’);
-btn.classList.add(‘loading’); btn.disabled = true;
-
-try {
-const resp = await fetch(’/.netlify/functions/claude’, {
-method:‘POST’,
-headers:{‘Content-Type’:‘application/json’},
-body: JSON.stringify({
-model:‘claude-sonnet-4-20250514’,
-max_tokens:1500,
-system: agents[‘lt-book’].systemPrompt,
-messages:[{ role:‘user’, content:`Recette : ${nom}\nCatégorie : ${cat}\nPersonnes : ${serves}\nNotes : ${notes||'aucune'}` }]
-})
+// BIND ALL
+document.getElementById('btab-kb').addEventListener('click',function(){setBrand('kb');});
+document.getElementById('btab-lt').addEventListener('click',function(){setBrand('lt');});
+['generate','calendar','analytics','recipes'].forEach(function(id){
+  document.getElementById('ntab-'+id).addEventListener('click',function(){showPanel(id);});
 });
-const data = await resp.json();
-const text = data.content?.[0]?.text || ‘’;
-// Parse et ajouter à la liste
-const newR = {
-id: Date.now(),
-emoji: ‘🍽️’,
-name: nom,
-cat, serves: serves,
-tags: [cat, ‘IA générée’],
-intro: text.substring(0, 150) + ‘…’,
-ingredients: [[‘Voir contenu généré’,’—’]],
-steps: [text],
-note: ‘Note générée par l'IA — à personnaliser.’,
-chapeau: ‘Recette créée avec amour.’
-};
-currentRecipes.unshift(newR);
-closeModal();
-renderRecipes();
-} catch(e) {
-alert(‘Erreur API. Vérifie ta connexion.’);
-} finally {
-btn.classList.remove(‘loading’); btn.disabled = false;
-}
-}
-
-function exportBook() {
-let content = ‘LA TRESSE BY KLOMAS — Livre de Recettes\n\n’;
-currentRecipes.forEach((r, i) => {
-content += `${i+1}. ${r.name.toUpperCase()}\n`;
-content += `"${r.chapeau}"\n\n`;
-content += `${r.intro}\n\n`;
-content += `INGRÉDIENTS (${r.serves})\n`;
-r.ingredients.forEach(ing => content += `- ${ing[0]} : ${ing[1]}\n`);
-content += `\nÉTAPES\n`;
-r.steps.forEach((s,j) => content += `${j+1}. ${s}\n`);
-content += `\n🌿 Note Botanique : ${r.note}\n\n---\n\n`;
+['pin-content','pin-publish','pin-analyse','copy','niche','piliers','lt-community','lt-reply','lt-schedule','lt-book','lt-niche','lt-piliers'].forEach(function(id){
+  var el=document.getElementById('ab-'+id); if(el) el.addEventListener('click',function(){showAgent(id);});
 });
-const blob = new Blob([content], { type:‘text/plain;charset=utf-8’ });
-const a = document.createElement(‘a’);
-a.href = URL.createObjectURL(blob);
-a.download = ‘LaTresse_Livre_Recettes.txt’;
-a.click();
-}
-
-/* ══════════════════════════════════════
-INIT — iPad Safari safe event binding
-══════════════════════════════════════ */
-function init() {
-const now = new Date();
-const days = [‘Dimanche’,‘Lundi’,‘Mardi’,‘Mercredi’,‘Jeudi’,‘Vendredi’,‘Samedi’];
-const months = [‘janvier’,‘février’,‘mars’,‘avril’,‘mai’,‘juin’,‘juillet’,‘août’,‘septembre’,‘octobre’,‘novembre’,‘décembre’];
-document.getElementById(‘topbar-date’).textContent = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
-
-// Bind brand buttons
-document.querySelectorAll(’.brand-btn’).forEach(btn => {
-btn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-setBrand(this.classList.contains(‘kb’) ? ‘kb’ : ‘lt’);
+[['btn-pin-content','pin-content','out-pin-content'],['btn-pin-publish','pin-publish','out-pin-publish'],['btn-pin-analyse','pin-analyse','out-pin-analyse'],['btn-copy','copy','out-copy'],['btn-niche','niche','out-niche'],['btn-piliers','piliers','out-piliers'],['btn-lt-community','lt-community','out-lt-community'],['btn-lt-reply','lt-reply','out-lt-reply'],['btn-lt-schedule','lt-schedule','out-lt-schedule'],['btn-lt-book','lt-book','out-lt-book'],['btn-lt-niche','lt-niche','out-lt-niche'],['btn-lt-piliers','lt-piliers','out-lt-piliers'],['btn-gen-recipe','recipe','out-recipe']].forEach(function(m){
+  var el=document.getElementById(m[0]); if(el) el.addEventListener('click',function(){callAI(m[1],m[0],m[2]);});
 });
+[['copy-pin-content','out-pin-content'],['copy-pin-publish','out-pin-publish'],['copy-pin-analyse','out-pin-analyse'],['copy-copy','out-copy'],['copy-niche','out-niche'],['copy-piliers','out-piliers'],['copy-lt-community','out-lt-community'],['copy-lt-reply','out-lt-reply'],['copy-lt-schedule','out-lt-schedule'],['copy-lt-book','out-lt-book'],['copy-lt-niche','out-lt-niche'],['copy-lt-piliers','out-lt-piliers'],['copy-recipe','out-recipe']].forEach(function(m){
+  var el=document.getElementById(m[0]); if(el) el.addEventListener('click',function(){docp(m[1],m[0]);});
 });
-
-// Bind module tabs
-document.querySelectorAll(’.mod-tab’).forEach(btn => {
-btn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-const id = this.id.replace(‘tab-’,’’);
-setModule(id);
-});
-});
-
-// Bind bottom nav
-document.querySelectorAll(’.bottom-nav-btn’).forEach(btn => {
-btn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-const ico = this.querySelector(’.bottom-nav-lbl’).textContent.toLowerCase();
-const map = {‘générer’:‘generate’,‘calendrier’:‘calendar’,‘analyse’:‘analytics’,‘recettes’:‘recipes’};
-setModule(map[ico] || ‘generate’);
-});
-});
-
-// Bind agent buttons — use event delegation on sidebar
-document.getElementById(‘sidebar’).addEventListener(‘click’, function(e) {
-const btn = e.target.closest(’.agent-btn’);
-if (!btn) return;
-const onclick = btn.getAttribute(‘onclick’);
-if (onclick) {
-const match = onclick.match(/selectAgent(’(.+?)’)/);
-if (match) selectAgent(match[1]);
-}
-});
-
-// Bind generate button
-document.getElementById(‘gen-btn’).addEventListener(‘click’, function(e) {
-e.stopPropagation();
-runAgent();
-});
-
-// Bind copy all button
-document.querySelector(’.copy-all-btn’).addEventListener(‘click’, function(e) {
-e.stopPropagation();
-copyOutput();
-});
-
-// Bind cal nav
-document.querySelectorAll(’.cal-nav-btn’).forEach((btn, i) => {
-btn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-changeMonth(i === 0 ? -1 : 1);
-});
-});
-
-// Bind recipe toolbar
-document.querySelectorAll(’.recipe-toolbar-btn’).forEach((btn, i) => {
-btn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-if (i === 0) openRecipeGen();
-else exportBook();
-});
-});
-
-// Bind recipe gen button
-const rgBtn = document.getElementById(‘recipe-gen-btn’);
-if (rgBtn) rgBtn.addEventListener(‘click’, function(e) {
-e.stopPropagation();
-generateRecipe();
-});
-
-// Bind modal close
-document.getElementById(‘recipe-modal’).addEventListener(‘click’, function(e) {
-if (e.target === this) closeModal();
-});
-document.querySelector(’.modal-close’).addEventListener(‘click’, function(e) {
-e.stopPropagation();
-closeModal();
-});
-
-// Bind detail back
-document.querySelector(’.detail-back’).addEventListener(‘click’, function(e) {
-e.stopPropagation();
-closeDetail();
-});
-
-selectAgent(‘pin-content’);
-}
-init();
+document.getElementById('cal-prev').addEventListener('click',function(){calM--;if(calM<0){calM=11;calY--;}renderCal();});
+document.getElementById('cal-next').addEventListener('click',function(){calM++;if(calM>11){calM=0;calY++;}renderCal();});
+document.getElementById('btn-new-recipe').addEventListener('click',function(){document.getElementById('recipe-form').classList.toggle('hide');});
+document.getElementById('btn-export').addEventListener('click',function(){alert('Export bientôt disponible !');});
 </script>
 
 </body>
