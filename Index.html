@@ -1912,13 +1912,103 @@ a.click();
 }
 
 /* ══════════════════════════════════════
-INIT
+INIT — iPad Safari safe event binding
 ══════════════════════════════════════ */
 function init() {
 const now = new Date();
 const days = [‘Dimanche’,‘Lundi’,‘Mardi’,‘Mercredi’,‘Jeudi’,‘Vendredi’,‘Samedi’];
 const months = [‘janvier’,‘février’,‘mars’,‘avril’,‘mai’,‘juin’,‘juillet’,‘août’,‘septembre’,‘octobre’,‘novembre’,‘décembre’];
 document.getElementById(‘topbar-date’).textContent = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
+
+// Bind brand buttons
+document.querySelectorAll(’.brand-btn’).forEach(btn => {
+btn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+setBrand(this.classList.contains(‘kb’) ? ‘kb’ : ‘lt’);
+});
+});
+
+// Bind module tabs
+document.querySelectorAll(’.mod-tab’).forEach(btn => {
+btn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+const id = this.id.replace(‘tab-’,’’);
+setModule(id);
+});
+});
+
+// Bind bottom nav
+document.querySelectorAll(’.bottom-nav-btn’).forEach(btn => {
+btn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+const ico = this.querySelector(’.bottom-nav-lbl’).textContent.toLowerCase();
+const map = {‘générer’:‘generate’,‘calendrier’:‘calendar’,‘analyse’:‘analytics’,‘recettes’:‘recipes’};
+setModule(map[ico] || ‘generate’);
+});
+});
+
+// Bind agent buttons — use event delegation on sidebar
+document.getElementById(‘sidebar’).addEventListener(‘click’, function(e) {
+const btn = e.target.closest(’.agent-btn’);
+if (!btn) return;
+const onclick = btn.getAttribute(‘onclick’);
+if (onclick) {
+const match = onclick.match(/selectAgent(’(.+?)’)/);
+if (match) selectAgent(match[1]);
+}
+});
+
+// Bind generate button
+document.getElementById(‘gen-btn’).addEventListener(‘click’, function(e) {
+e.stopPropagation();
+runAgent();
+});
+
+// Bind copy all button
+document.querySelector(’.copy-all-btn’).addEventListener(‘click’, function(e) {
+e.stopPropagation();
+copyOutput();
+});
+
+// Bind cal nav
+document.querySelectorAll(’.cal-nav-btn’).forEach((btn, i) => {
+btn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+changeMonth(i === 0 ? -1 : 1);
+});
+});
+
+// Bind recipe toolbar
+document.querySelectorAll(’.recipe-toolbar-btn’).forEach((btn, i) => {
+btn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+if (i === 0) openRecipeGen();
+else exportBook();
+});
+});
+
+// Bind recipe gen button
+const rgBtn = document.getElementById(‘recipe-gen-btn’);
+if (rgBtn) rgBtn.addEventListener(‘click’, function(e) {
+e.stopPropagation();
+generateRecipe();
+});
+
+// Bind modal close
+document.getElementById(‘recipe-modal’).addEventListener(‘click’, function(e) {
+if (e.target === this) closeModal();
+});
+document.querySelector(’.modal-close’).addEventListener(‘click’, function(e) {
+e.stopPropagation();
+closeModal();
+});
+
+// Bind detail back
+document.querySelector(’.detail-back’).addEventListener(‘click’, function(e) {
+e.stopPropagation();
+closeDetail();
+});
+
 selectAgent(‘pin-content’);
 }
 init();
