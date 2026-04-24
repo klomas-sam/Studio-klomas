@@ -422,7 +422,7 @@ async function callAI(agentId, btnId, outId) {
     var r = await fetch('/.netlify/functions/claude', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1500, system:P[agentId]||P['pin-content'], messages:[{role:'user',content:msg||'Génère un exemple pour Klomas Botanique.'}]})
+      body: JSON.stringify({model:'claude-sonnet-4-5', max_tokens:1500, system:P[agentId]||P['pin-content'], messages:[{role:'user',content:msg||'Génère un exemple pour Klomas Botanique.'}]})
     });
     var d = await r.json();
     out.textContent = (d.content && d.content[0] && d.content[0].text) ? d.content[0].text : JSON.stringify(d);
