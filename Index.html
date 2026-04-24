@@ -1656,7 +1656,7 @@ btn.disabled = true;
 out.textContent = ‘’;
 
 try {
-const resp = await fetch(‘/netlify/fonctions/claude’, {
+const resp = await fetch(’/.netlify/functions/claude’, {
 method: ‘POST’,
 headers: { ‘Content-Type’: ‘application/json’ },
 body: JSON.stringify({
@@ -1857,7 +1857,7 @@ const btn = document.getElementById(‘recipe-gen-btn’);
 btn.classList.add(‘loading’); btn.disabled = true;
 
 try {
-const resp = await fetch('/netlify/fonctions/claude’, {
+const resp = await fetch(’/.netlify/functions/claude’, {
 method:‘POST’,
 headers:{‘Content-Type’:‘application/json’},
 body: JSON.stringify({
