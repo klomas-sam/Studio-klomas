@@ -12,3 +12,5 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers: { 'Access-Control-Allow-Origin': '*' }, body: JSON.stringify(data) };
   } catch(e) { return { statusCode: 500, body: e.message }; }
 };
+
+module.exports.handler = exports.handler;
